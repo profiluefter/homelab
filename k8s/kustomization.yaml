@@ -4,4 +4,5 @@ metadata:
   name: homelab
 resources:
   - database/postgres
+  - services/k8s-dashboard
   - storage/qnap
