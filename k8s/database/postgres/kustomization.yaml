@@ -5,3 +5,4 @@ metadata:
 namespace: postgres
 resources:
   - https://github.com/zalando/postgres-operator/manifests/
+  - dbms.yaml
