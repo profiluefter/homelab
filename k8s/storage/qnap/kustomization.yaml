@@ -1,0 +1,37 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+metadata:
+  name: qnap-storage
+namespace: qnap-storage
+resources:
+  - https://raw.githubusercontent.com/nine-lives-later/qnap-storage-provisioner/v1.1.1.k8s-1-19/kubernetes.yml
+patches:
+  - target:
+      kind: Pod
+      name: qnap-storage-provisioner
+    patch: |-
+      - op: replace
+        path: /spec/containers/0/image
+        value: nineliveslater/qnap-storage-provisioner:v1.1.1.k8s-1-19
+      - op: replace
+        path: /spec/containers/0/env
+        value:
+          - name: QNAP_URL
+            value: https://qnap.h-a.cc
+          - name: QNAP_NFSHOST
+            value: qnap.h-a.cc
+          - name: QNAP_SHARE
+            value: Kubernetes
+          - name: QNAP_USER
+            value: kubernetes
+          - name: QNAP_PWD
+            valueFrom:
+              secretKeyRef:
+                name: qnap-storage-provisioner
+                key: password
+  - target:
+      kind: StorageClass
+      name: qnap-data
+    patch: |-
+      - op: remove
+        path: /parameters/shareName
