@@ -4,5 +4,6 @@ metadata:
   name: postgres
 namespace: postgres
 resources:
+  - namespace.yaml
   - https://github.com/zalando/postgres-operator/manifests/
   - dbms.yaml
