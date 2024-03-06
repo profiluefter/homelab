@@ -1,0 +1,12 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: qnap-data
+provisioner: nfs.csi.k8s.io
+parameters:
+  server: qnap.h-a.cc
+  share: /Kubernetes
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
+mountOptions:
+  - nfsvers=4.1
