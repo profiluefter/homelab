@@ -1,0 +1,12 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: k8s-dashboard
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/profiluefter/homelab
+    path: k8s/services/k8s-dashboard
+  destination:
+    server: "https://kubernetes.default.svc"
