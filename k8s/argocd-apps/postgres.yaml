@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/profiluefter/homelab
-    path: k8s/database/postgres
+    path: k8s/infra/postgres
   destination:
     server: "https://kubernetes.default.svc"
   syncPolicy:
