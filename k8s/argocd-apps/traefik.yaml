@@ -18,7 +18,8 @@ spec:
 
         ports:
           web:
-            redirectTo: websecure
+            redirectTo:
+              port: websecure
 
         tlsStore:
           default:
