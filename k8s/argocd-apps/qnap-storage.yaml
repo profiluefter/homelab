@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/profiluefter/homelab
-    path: k8s/storage/qnap
+    path: k8s/infra/qnap-storage
   destination:
     server: "https://kubernetes.default.svc"
   syncPolicy:
