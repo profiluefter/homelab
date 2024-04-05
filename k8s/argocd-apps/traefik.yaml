@@ -1,0 +1,48 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: traefik
+  namespace: argocd
+spec:
+  project: default
+  source:
+    chart: traefik
+    repoURL: https://traefik.github.io/charts
+    targetRevision: 27.0.0
+    helm:
+      releaseName: traefik
+      valuesObject:
+
+        service:
+          type: NodePort
+
+        ports:
+          web:
+            redirectTo: websecure
+
+        tlsStore:
+          default:
+            defaultCertificate:
+              secretName: homelab-services-cert
+
+        extraObjects:
+          - apiVersion: cert-manager.io/v1
+            kind: Certificate
+            metadata:
+              name: homelab-services
+              namespace: default
+            spec:
+              secretName: homelab-services-cert
+              dnsNames:
+                - "s.h-a.cc"
+                - "*.s.h-a.cc"
+              issuerRef:
+                name: letsencrypt-prod
+                kind: ClusterIssuer
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: kube-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
