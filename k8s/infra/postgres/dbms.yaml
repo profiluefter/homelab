@@ -1,20 +1,19 @@
-# TODO: fix NFS permission issues
-
-#apiVersion: acid.zalan.do/v1
-#kind: postgresql
-#metadata:
-#  name: postgres-cluster
-#spec:
-#  teamId: none
-#  volume:
-#    size: 5Gi
-#    storageClass: qnap-data
-#  numberOfInstances: 1
-#  users:
-#    postgres:
-#      - superuser
-#      - createdb
-#  databases:
-#    postgres: postgres
-#  postgresql:
-#    version: "15"
+apiVersion: acid.zalan.do/v1
+kind: postgresql
+metadata:
+  name: postgres-cluster
+spec:
+  teamId: none
+  volume:
+    size: 5Gi
+    # TODO: Look into better options (e.g. replicate to NFS)
+    storageClass: local-path
+  numberOfInstances: 1
+  users:
+    postgres:
+      - superuser
+      - createdb
+  databases:
+    postgres: postgres
+  postgresql:
+    version: "15"
