@@ -2,8 +2,5 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 metadata:
   name: postgres
-namespace: postgres
 resources:
-  - namespace.yaml
-  - https://github.com/zalando/postgres-operator/manifests/
-  - dbms.yaml
+  - https://raw.githubusercontent.com/cloudnative-pg/cloudnative-pg/release-1.22/releases/cnpg-1.22.2.yaml
