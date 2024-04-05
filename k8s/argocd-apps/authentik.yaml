@@ -1,0 +1,90 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: authentik
+  namespace: argocd
+spec:
+  project: default
+  source:
+    chart: authentik
+    repoURL: https://charts.goauthentik.io
+    targetRevision: 2024.2.2
+    helm:
+      releaseName: authentik
+      valuesObject:
+
+        server:
+          ingress:
+            enabled: true
+            hosts:
+              - auth.s.h-a.cc
+
+        postgresql:
+          enabled: false
+
+        redis:
+          enabled: true
+          master:
+            persistence:
+              size: 1Gi
+
+        global:
+          env:
+            - name: AUTHENTIK_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: authentik-secret-key
+                  key: secret-key
+            - name: AUTHENTIK_BOOTSTRAP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: authentik-secret-key
+                  key: bootstrap-password
+
+            - name: AUTHENTIK_POSTGRESQL__HOST
+              valueFrom:
+                secretKeyRef:
+                  name: authentik-postgres-app
+                  key: hostname
+            - name: AUTHENTIK_POSTGRESQL__NAME
+              valueFrom:
+                secretKeyRef:
+                  name: authentik-postgres-app
+                  key: database
+            - name: AUTHENTIK_POSTGRESQL__USER
+              valueFrom:
+                secretKeyRef:
+                  name: authentik-postgres-app
+                  key: username
+            - name: AUTHENTIK_POSTGRESQL__PORT
+              valueFrom:
+                secretKeyRef:
+                  name: authentik-postgres-app
+                  key: port
+            - name: AUTHENTIK_POSTGRESQL__PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: authentik-postgres-app
+                  key: password
+
+        additionalObjects:
+          - apiVersion: postgresql.cnpg.io/v1
+            kind: Cluster
+            metadata:
+              name: authentik-postgres
+              namespace: authentik
+            spec:
+              instances: 1
+              storage:
+                size: 1Gi
+                storageClass: local-path
+
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: authentik
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
