@@ -45,12 +45,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: authentik-postgres-app
-                  key: hostname
+                  key: host
             - name: AUTHENTIK_POSTGRESQL__NAME
               valueFrom:
                 secretKeyRef:
                   name: authentik-postgres-app
-                  key: database
+                  key: dbname
             - name: AUTHENTIK_POSTGRESQL__USER
               valueFrom:
                 secretKeyRef:
