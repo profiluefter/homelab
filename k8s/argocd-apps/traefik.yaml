@@ -31,7 +31,7 @@ spec:
             kind: Certificate
             metadata:
               name: homelab-services
-              namespace: default
+              namespace: traefik
             spec:
               secretName: homelab-services-cert
               dnsNames:
@@ -42,7 +42,7 @@ spec:
                 kind: ClusterIssuer
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: kube-system
+    namespace: traefik
   syncPolicy:
     automated:
       prune: true
