@@ -1,13 +1,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argo-cd
+  name: argocd
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/profiluefter/homelab
-    path: k8s/infra/argo-cd
+    path: k8s/infra/argocd
   destination:
     server: "https://kubernetes.default.svc"
   syncPolicy:
