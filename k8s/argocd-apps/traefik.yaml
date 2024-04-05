@@ -13,6 +13,9 @@ spec:
       releaseName: traefik
       valuesObject:
 
+        additionalArguments:
+          - "--providers.kubernetesingress.ingressendpoint.publishedservice=traefik/traefik"
+
         ports:
           web:
             redirectTo:
