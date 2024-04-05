@@ -13,9 +13,6 @@ spec:
       releaseName: traefik
       valuesObject:
 
-        service:
-          type: NodePort
-
         ports:
           web:
             redirectTo:
