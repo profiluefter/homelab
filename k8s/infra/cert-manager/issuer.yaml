@@ -6,9 +6,9 @@ metadata:
 spec:
   acme:
     email: k8s-certs@profiluefter.me
-    server:
+    server: https://acme-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
-      name:
+      name: letsencrypt-prod-account-key
     solvers:
       - dns01:
           cloudflare:
