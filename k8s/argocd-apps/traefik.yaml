@@ -44,6 +44,8 @@ spec:
     server: "https://kubernetes.default.svc"
     namespace: traefik
   syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
     automated:
       prune: true
       selfHeal: true
