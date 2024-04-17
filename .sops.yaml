@@ -1,0 +1,6 @@
+keys:
+  - &user_profiluefter 9264180E8BA8C283F19DB9F8B18AC2562696539F
+
+creation_rules:
+  - path_regex: infra/secrets/
+    pgp: *user_profiluefter

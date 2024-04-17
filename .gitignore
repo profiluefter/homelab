@@ -1,2 +1,5 @@
 .idea/
 kubeconfig
+.terraform/
+terraform.tfstate
+terraform.tfstate.backup
