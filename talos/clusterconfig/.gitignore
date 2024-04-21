@@ -1,0 +1,4 @@
+krz-k8s-talos-master-1.lan.yaml
+krz-k8s-talos-worker-1.lan.yaml
+krz-k8s-talos-worker-2.lan.yaml
+talosconfig

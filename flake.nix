@@ -1,7 +1,8 @@
 {
   inputs.nixpkgs.url = "nixpkgs";
+  inputs.talhelper.url = "github:budimanjojo/talhelper";
 
-  outputs = { self, nixpkgs }:
+  outputs = { self, nixpkgs, talhelper }:
     let
       pkgs = import nixpkgs {
         system = "x86_64-linux";
@@ -10,7 +11,14 @@
     in
     {
       devShells.x86_64-linux.default = pkgs.mkShell {
-        packages = with pkgs; [ kubectl argocd sops terraform ];
+        packages = with pkgs; [
+          kubectl
+          fluxcd
+          sops
+          terraform
+          talosctl
+          talhelper.packages.x86_64-linux.default
+        ];
 
         shellHook = ''
           if [[ ! -f kubeconfig ]]; then

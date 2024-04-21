@@ -4,3 +4,5 @@ keys:
 creation_rules:
   - path_regex: infra/secrets/
     pgp: *user_profiluefter
+  - path_regex: talos/
+    pgp: *user_profiluefter

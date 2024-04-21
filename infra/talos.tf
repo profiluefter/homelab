@@ -10,16 +10,28 @@ resource "proxmox_storage_iso" "talos-iso" {
   checksum           = ":cb289716511e1a2a1a580160daee90f3858e84e3233057c125af6f5fef1cf3d70d4bf9f1b539d5b94aaa96cc4ff17439d137ef15182645b61cef29f1346e4114"
 }
 
+locals {
+  talos_master_macs = [
+    "C2:71:14:A0:F0:00"
+  ]
+
+  talos_worker_macs = [
+    "C2:71:14:A0:FF:00",
+    "C2:71:14:A0:FF:01"
+  ]
+}
+
 resource "proxmox_vm_qemu" "talos_master" {
-  count = 1
+  for_each = {for mac in local.talos_master_macs: index(local.talos_master_macs, mac) => mac}
 
   depends_on = [proxmox_storage_iso.talos-iso]
   iso = "${proxmox_storage_iso.talos-iso.storage}:iso/${proxmox_storage_iso.talos-iso.filename}"
+  qemu_os = "l26"
 
   target_node = "thought"
 
-  name = "talos-master-${count.index + 1}"
-  desc = "Talos Master Node ${count.index + 1}"
+  name = "talos-master-${each.key + 1}"
+  desc = "Talos Master Node ${each.key + 1}"
 
   memory = 4096
   cores  = 2
@@ -28,6 +40,7 @@ resource "proxmox_vm_qemu" "talos_master" {
 
   boot = "order=scsi0;ide2"
 
+  scsihw = "virtio-scsi-pci"
   disks {
     scsi {
       scsi0 {
@@ -42,19 +55,21 @@ resource "proxmox_vm_qemu" "talos_master" {
   network {
     model  = "virtio"
     bridge = "vmbr0"
+    macaddr = each.value
   }
 }
 
 resource "proxmox_vm_qemu" "talos_worker" {
-  count = 2
+  for_each = {for mac in local.talos_worker_macs: index(local.talos_worker_macs, mac) => mac}
 
   depends_on = [proxmox_storage_iso.talos-iso]
   iso = "${proxmox_storage_iso.talos-iso.storage}:iso/${proxmox_storage_iso.talos-iso.filename}"
+  qemu_os = "l26"
 
   target_node = "thought"
 
-  name = "talos-worker-${count.index + 1}"
-  desc = "Talos Worker Node ${count.index + 1}"
+  name = "talos-worker-${each.key + 1}"
+  desc = "Talos Worker Node ${each.key + 1}"
 
   memory = 2048
   cores  = 2
@@ -63,6 +78,7 @@ resource "proxmox_vm_qemu" "talos_worker" {
 
   boot = "order=scsi0;ide2"
 
+  scsihw = "virtio-scsi-pci"
   disks {
     scsi {
       scsi0 {
@@ -77,5 +93,6 @@ resource "proxmox_vm_qemu" "talos_worker" {
   network {
     model  = "virtio"
     bridge = "vmbr0"
+    macaddr = each.value
   }
 }
