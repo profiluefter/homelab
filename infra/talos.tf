@@ -32,6 +32,7 @@ resource "proxmox_vm_qemu" "talos_master" {
 
   name = "talos-master-${each.key + 1}"
   desc = "Talos Master Node ${each.key + 1}"
+  tags = "talos"
 
   memory = 4096
   cores  = 2
@@ -70,6 +71,7 @@ resource "proxmox_vm_qemu" "talos_worker" {
 
   name = "talos-worker-${each.key + 1}"
   desc = "Talos Worker Node ${each.key + 1}"
+  tags = "talos"
 
   memory = 2048
   cores  = 2
