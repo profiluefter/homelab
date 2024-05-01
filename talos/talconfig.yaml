@@ -3,7 +3,6 @@ clusterName: krz-k8s
 talosVersion: v1.6.7
 kubernetesVersion: v1.29.0
 
-domain: cluster.h-a.cc
 allowSchedulingOnControlPlanes: false
 
 endpoint: https://talos-master-1.lan:6443
