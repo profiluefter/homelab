@@ -13,11 +13,16 @@
       devShells.x86_64-linux.default = pkgs.mkShell {
         packages = with pkgs; [
           kubectl
+          kubectx
+
           fluxcd
           sops
-          terraform
+          age
+
           talosctl
           talhelper.packages.x86_64-linux.default
+
+          terraform
         ];
 
         shellHook = ''

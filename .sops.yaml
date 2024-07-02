@@ -1,8 +1,13 @@
 keys:
   - &user_profiluefter 9264180E8BA8C283F19DB9F8B18AC2562696539F
+  - &host_k8s-homelab age1kvurr9559cqq6q05gdv0g7798darr2y0n857zjz7z6w34cvx2f0s4auuwr
 
 creation_rules:
   - path_regex: infra/secrets/
     pgp: *user_profiluefter
+  - path_regex: k8s/.*\.yaml
+    encrypted_regex: ^(data|stringData)$
+    pgp: *user_profiluefter
+    age: *host_k8s-homelab
   - path_regex: talos/
     pgp: *user_profiluefter
