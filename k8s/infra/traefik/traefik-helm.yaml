@@ -19,6 +19,7 @@ spec:
         name: traefik
         namespace: flux-system
       interval: 10m
+  targetNamespace: traefik
   values:
     ports:
       web:
