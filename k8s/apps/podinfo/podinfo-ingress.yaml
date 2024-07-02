@@ -4,6 +4,10 @@ metadata:
   name: podinfo
   namespace: podinfo
 spec:
+  tls:
+    - hosts:
+        - podinfo.s.h-a.cc
+      secretName: podinfo-tls
   rules:
     - host: podinfo.s.h-a.cc
       http:
