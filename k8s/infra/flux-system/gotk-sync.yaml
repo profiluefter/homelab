@@ -21,7 +21,7 @@ metadata:
 spec:
   interval: 10m0s
   retryInterval: 1m0s
-  path: ./k8s
+  path: ./k8s/infra/flux-system
   prune: true
   sourceRef:
     kind: GitRepository
