@@ -28,8 +28,14 @@ spec:
     server:
       ingress:
         enabled: true
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-prod
         hosts:
           - auth.s.h-a.cc
+        tls:
+          - hosts:
+              - auth.s.h-a.cc
+            secretName: authentik-tls
 
     postgresql:
       enabled: false
