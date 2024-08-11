@@ -4,6 +4,7 @@ namespace: flux-system
 
 resources:
   - cert-manager.yaml
+  - longhorn.yaml
   - metallb.yaml
   - podinfo.yaml
   - traefik.yaml
