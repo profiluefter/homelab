@@ -1,11 +1,27 @@
 clusterName: krz-k8s
 
-talosVersion: v1.6.7
+talosVersion: v1.7.5
 kubernetesVersion: v1.29.0
 
 allowSchedulingOnControlPlanes: false
 
 endpoint: https://talos-master-1.lan:6443
+
+controlPlane:
+  schematic:
+    customization:
+      systemExtensions:
+        officialExtensions:
+          - siderolabs/iscsi-tools
+          - siderolabs/util-linux-tools
+
+worker:
+  schematic:
+    customization:
+      systemExtensions:
+        officialExtensions:
+          - siderolabs/iscsi-tools
+          - siderolabs/util-linux-tools
 
 nodes:
   - hostname: talos-master-1.lan
