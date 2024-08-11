@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: flux-system
 
 resources:
+  - authentik.yaml
   - cert-manager.yaml
   - longhorn.yaml
   - metallb.yaml
