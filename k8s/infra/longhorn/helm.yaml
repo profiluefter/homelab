@@ -43,4 +43,4 @@ spec:
       tls: true
       tlsSecret: longhorn-tls
       annotations:
-        cert-manager.io/cluster-issuer: letsencrypt
+        cert-manager.io/cluster-issuer: letsencrypt-prod
