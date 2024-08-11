@@ -17,7 +17,7 @@ spec:
   chart:
     spec:
       chart: cert-manager
-      version: 1.14.x
+      version: 1.15.x
       sourceRef:
         kind: HelmRepository
         name: cert-manager
@@ -26,6 +26,9 @@ spec:
   targetNamespace: cert-manager
   install:
     createNamespace: true
+    crds: CreateReplace
+  upgrade:
+    crds: CreateReplace
   values:
     crds:
       enabled: true
