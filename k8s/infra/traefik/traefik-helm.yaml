@@ -28,3 +28,27 @@ spec:
     providers:
       kubernetesCRD:
         allowCrossNamespace: true
+    ingressRoute:
+      dashboard:
+        enabled: true
+        matchRule: Host(`traefik.s.h-a.cc`)
+        entryPoints:
+          - websecure
+        middlewares:
+          - name: ak-outpost-authentik-embedded-outpost
+            namespace: authentik
+        tls:
+          secretName: traefik-dashboard-tls
+    extraObjects:
+      - apiVersion: cert-manager.io/v1
+        kind: Certificate
+        metadata:
+          name: traefik-dashboard-cert
+          namespace: traefik
+        spec:
+          secretName: traefik-dashboard-tls
+          issuerRef:
+            name: letsencrypt-prod
+            kind: ClusterIssuer
+          dnsNames:
+            - traefik.s.h-a.cc
