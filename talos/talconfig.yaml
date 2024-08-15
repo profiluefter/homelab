@@ -1,6 +1,6 @@
 clusterName: krz-k8s
 
-talosVersion: v1.7.5
+talosVersion: v1.7.6
 kubernetesVersion: v1.29.0
 
 allowSchedulingOnControlPlanes: false
@@ -14,6 +14,7 @@ controlPlane:
         officialExtensions:
           - siderolabs/iscsi-tools
           - siderolabs/util-linux-tools
+          - siderolabs/qemu-guest-agent
 
 worker:
   schematic:
@@ -22,6 +23,7 @@ worker:
         officialExtensions:
           - siderolabs/iscsi-tools
           - siderolabs/util-linux-tools
+          - siderolabs/qemu-guest-agent
 
 nodes:
   - hostname: talos-master-1.lan

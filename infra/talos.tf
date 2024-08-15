@@ -1,3 +1,4 @@
+# only used for initial installation. version and additional system extensions will be managed using talosctl
 resource "proxmox_storage_iso" "talos-iso" {
   pve_node = "thought"
 
@@ -35,11 +36,13 @@ resource "proxmox_vm_qemu" "talos_master" {
   tags = "talos"
 
   memory = 4096
+  balloon = 2048
   cores  = 2
 
   cpu = "x86-64-v2-AES"
 
   boot = "order=scsi0;ide2"
+  agent = 1
 
   scsihw = "virtio-scsi-pci"
   disks {
@@ -73,12 +76,14 @@ resource "proxmox_vm_qemu" "talos_worker" {
   desc = "Talos Worker Node ${each.key + 1}"
   tags = "talos"
 
-  memory = 2048
-  cores  = 2
+  memory = 4096
+  balloon = 2048
+  cores  = 3
 
   cpu = "x86-64-v2-AES"
 
   boot = "order=scsi0;ide2"
+  agent = 1
 
   scsihw = "virtio-scsi-pci"
   disks {
