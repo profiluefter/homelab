@@ -8,7 +8,27 @@ terraform {
       source  = "carlpett/sops"
       version = "~> 0.5"
     }
+    oci = {
+      source  = "oracle/oci"
+      version = "6.7.0"
+    }
   }
+}
+
+data "sops_file" "oci_credentials" {
+  source_file = "secrets/oci.yaml"
+}
+
+provider "oci" {
+  tenancy_ocid = data.sops_file.oci_credentials.data["tenancy_ocid"]
+  user_ocid    = data.sops_file.oci_credentials.data["user_ocid"]
+  private_key  = data.sops_file.oci_credentials.data["private_key"]
+  fingerprint  = data.sops_file.oci_credentials.data["fingerprint"]
+  region       = data.sops_file.oci_credentials.data["region"]
+}
+
+module "oracle_base" {
+  source = "./modules/oracle-base"
 }
 
 data "sops_file" "proxmox_credentials" {
