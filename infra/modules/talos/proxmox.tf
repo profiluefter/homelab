@@ -1,3 +1,12 @@
+terraform {
+  required_providers {
+    proxmox = {
+      source  = "telmate/proxmox"
+      version = "3.0.1-rc1"
+    }
+  }
+}
+
 # only used for initial installation. version and additional system extensions will be managed using talosctl
 resource "proxmox_storage_iso" "talos-iso" {
   pve_node = "thought"
@@ -11,19 +20,8 @@ resource "proxmox_storage_iso" "talos-iso" {
   checksum           = ":cb289716511e1a2a1a580160daee90f3858e84e3233057c125af6f5fef1cf3d70d4bf9f1b539d5b94aaa96cc4ff17439d137ef15182645b61cef29f1346e4114"
 }
 
-locals {
-  talos_master_macs = [
-    "C2:71:14:A0:F0:00"
-  ]
-
-  talos_worker_macs = [
-    "C2:71:14:A0:FF:00",
-    "C2:71:14:A0:FF:01"
-  ]
-}
-
 resource "proxmox_vm_qemu" "talos_master" {
-  for_each = {for mac in local.talos_master_macs: index(local.talos_master_macs, mac) => mac}
+  for_each = {for mac in var.proxmox_master_macs: index(var.proxmox_master_macs, mac) => mac}
 
   depends_on = [proxmox_storage_iso.talos-iso]
   iso = "${proxmox_storage_iso.talos-iso.storage}:iso/${proxmox_storage_iso.talos-iso.filename}"
@@ -64,7 +62,7 @@ resource "proxmox_vm_qemu" "talos_master" {
 }
 
 resource "proxmox_vm_qemu" "talos_worker" {
-  for_each = {for mac in local.talos_worker_macs: index(local.talos_worker_macs, mac) => mac}
+  for_each = {for mac in var.proxmox_worker_macs: index(var.proxmox_worker_macs, mac) => mac}
 
   depends_on = [proxmox_storage_iso.talos-iso]
   iso = "${proxmox_storage_iso.talos-iso.storage}:iso/${proxmox_storage_iso.talos-iso.filename}"
