@@ -5,6 +5,7 @@ namespace: flux-system
 resources:
   - authentik.yaml
   - cert-manager.yaml
+  - grafana.yaml
   - longhorn.yaml
   - metallb.yaml
   - podinfo.yaml

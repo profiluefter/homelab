@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: grafana
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: Grafana
+metadata:
+  name: grafana
+spec:
+  config:
+    log:
+      mode: "console"
+    security:
+      disable_initial_admin_creation: "true"
+      cookie_secure: "true"
+    server:
+      root_url: "https://grafana.s.h-a.cc"
+    auth:
+      disable_login_form: "true"
+      signout_redirect_url: "https://auth.s.h-a.cc/application/o/grafana/end-session/"
+    auth.generic_oauth:
+      name: "authentik"
+      enabled: "true"
+      auto_login: "true"
+      client_id: "${AUTH_CLIENT_ID}"
+      client_secret: "${AUTH_CLIENT_SECRET}"
+      scopes: "openid profile email grafana"
+      auth_url: "https://auth.s.h-a.cc/application/o/authorize/"
+      token_url: "https://auth.s.h-a.cc/application/o/token/"
+      api_url: "https://auth.s.h-a.cc/application/o/userinfo/"
+      login_attribute_path: "preferred_username"
+      email_attribute_path: "email"
+      role_attribute_path: "grafana_role"
+      role_attribute_strict: "true"
+  deployment:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: grafana
+              env:
+                - name: AUTH_CLIENT_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: grafana-oauth
+                      key: client_id
+                - name: AUTH_CLIENT_SECRET
+                  valueFrom:
+                    secretKeyRef:
+                      name: grafana-oauth
+                      key: client_secret
+  ingress:
+    metadata:
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+    spec:
+      rules:
+        - host: grafana.s.h-a.cc
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: grafana-service
+                    port:
+                      number: 3000
+                path: /
+                pathType: Prefix
+      tls:
+        - hosts:
+            - grafana.s.h-a.cc
+          secretName: grafana-tls
