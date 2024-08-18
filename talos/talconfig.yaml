@@ -12,8 +12,6 @@ controlPlane:
     customization:
       systemExtensions:
         officialExtensions:
-          - siderolabs/iscsi-tools
-          - siderolabs/util-linux-tools
           - siderolabs/qemu-guest-agent
 
 worker:
@@ -21,9 +19,22 @@ worker:
     customization:
       systemExtensions:
         officialExtensions:
+          # longhorn required iscsi-tools and util-linux-tools
           - siderolabs/iscsi-tools
           - siderolabs/util-linux-tools
           - siderolabs/qemu-guest-agent
+  patches:
+    - |-
+      machine:
+        kubelet:
+          extraMounts:
+            - destination: /var/lib/longhorn
+              type: bind
+              source: /var/lib/longhorn
+              options:
+                - bind
+                - rshared
+                - rw
 
 nodes:
   - hostname: talos-master-1.lan
@@ -31,13 +42,19 @@ nodes:
     controlPlane: true
     installDiskSelector:
       size: 20Gi
+    nodeLabels:
+      network-location: krz
 
   - hostname: talos-worker-1.lan
     ipAddress: 10.0.0.151
     installDiskSelector:
       size: 20Gi
+    nodeLabels:
+      network-location: krz
 
   - hostname: talos-worker-2.lan
     ipAddress: 10.0.0.152
     installDiskSelector:
       size: 20Gi
+    nodeLabels:
+      network-location: krz
