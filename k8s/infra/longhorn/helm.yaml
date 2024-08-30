@@ -44,7 +44,9 @@ spec:
       tlsSecret: longhorn-tls
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-prod
+        traefik.ingress.kubernetes.io/router.middlewares: authentik-ak-outpost-authentik-embedded-outpost@kubernetescrd
+    persistence:
+      defaultClassReplicaCount: 2 # not enough nodes currently
+      defaultDataLocality: best-effort
     defaultSettings:
-      defaultReplicaCount: 2 # not enough nodes currently
-
       backupTarget: nfs://10.0.0.22:/Kubernetes
