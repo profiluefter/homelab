@@ -1,0 +1,93 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: freshrss
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: freshrss
+  template:
+    metadata:
+      labels:
+        app: freshrss
+    spec:
+      containers:
+        - name: freshrss
+          image: freshrss/freshrss:1.24.2
+          env:
+            - name: TZ
+              value: "Europe/Vienna"
+            - name: CRON_MIN
+              value: "10,40"
+            # to skip the initial installation because values have already been set in the config files
+            - name: FRESHRSS_INSTALL
+              value: "--default-user=fabian"
+            - name: FRESHRSS_USER
+              value: "--user=fabian"
+
+            - name: FRESHRSS_POSTGRES_HOST
+              valueFrom:
+                secretKeyRef:
+                  key: host
+                  name: freshrss-postgres-app
+            - name: FRESHRSS_POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  key: user
+                  name: freshrss-postgres-app
+            - name: FRESHRSS_POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: freshrss-postgres-app
+            - name: FRESHRSS_POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  key: dbname
+                  name: freshrss-postgres-app
+
+            - name: OIDC_ENABLED
+              value: "1"
+            - name: OIDC_PROVIDER_METADATA_URL
+              value: "https://auth.s.h-a.cc/application/o/freshrss/.well-known/openid-configuration"
+            - name: OIDC_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  key: client_id
+                  name: freshrss-oauth-credentials
+            - name: OIDC_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: client_secret
+                  name: freshrss-oauth-credentials
+            - name: OIDC_CLIENT_CRYPTO_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: crypto_key
+                  name: freshrss-oauth-credentials
+            - name: OIDC_REMOTE_USER_CLAIM
+              value: "preferred_username"
+            - name: OIDC_X_FORWARDED_HEADERS
+              value: "X-Forwarded-Port X-Forwarded-Proto X-Forwarded-Host"
+            - name: OIDC_SCOPES
+              value: "openid email profile"
+          ports:
+            - containerPort: 80
+              name: http
+          volumeMounts:
+            - mountPath: /var/www/FreshRSS/data
+              name: data
+            - mountPath: /var/www/FreshRSS/data/config.custom.php
+              name: config
+              subPath: config.custom.php
+            - mountPath: /var/www/FreshRSS/data/config-user.custom.php
+              name: config
+              subPath: config-user.custom.php
+      volumes:
+        - name: config
+          configMap:
+            name: freshrss-config
+        - name: data
+          persistentVolumeClaim:
+            claimName: freshrss-data

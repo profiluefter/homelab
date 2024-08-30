@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: freshrss-config
+data:
+  config.custom.php: |
+    <?php
+    
+    return array(
+        'base_url' => 'https://freshrss.s.h-a.cc/',
+        'auth_type' => 'http_auth',
+        'api_enabled' => true,
+        'pubsubhubbub_enabled' => true,
+        'db' => [
+            'type' => 'pgsql',
+            'host' => getenv('FRESHRSS_POSTGRES_HOST'),
+            'user' => getenv('FRESHRSS_POSTGRES_USER'),
+            'password' => getenv('FRESHRSS_POSTGRES_PASSWORD'),
+            'base' => getenv('FRESHRSS_POSTGRES_DB'),
+            'prefix' => ''
+        ],
+        'disable_update' => true
+    );
+  config-user.custom.php: |
+    <?php
+    
+    return array(
+        'theme' => 'Nord',
+    );

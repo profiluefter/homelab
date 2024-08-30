@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+  name: freshrss
+spec:
+  tls:
+    - hosts:
+        - freshrss.s.h-a.cc
+      secretName: freshrss-tls
+  rules:
+    - host: freshrss.s.h-a.cc
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: freshrss
+                port:
+                  name: http
