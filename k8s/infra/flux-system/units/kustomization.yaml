@@ -11,6 +11,7 @@ resources:
   - metallb.yaml
   - podinfo.yaml
   - postgres.yaml
+  - tekton.yaml
   - traefik.yaml
 
 patches:
