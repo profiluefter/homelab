@@ -17,6 +17,7 @@ resource "proxmox_vm_qemu" "talos_master" {
   qemu_os = "l26"
 
   target_node = "thought"
+  onboot = true
 
   name = "talos-master-${each.key + 1}"
   desc = "Talos Master Node ${each.key + 1}"
@@ -56,13 +57,14 @@ resource "proxmox_vm_qemu" "talos_worker" {
   qemu_os = "l26"
 
   target_node = "thought"
+  onboot = true
 
   name = "talos-worker-${each.key + 1}"
   desc = "Talos Worker Node ${each.key + 1}"
   tags = "talos"
 
-  memory  = 4096
-  balloon = 2048
+  memory  = 6144
+  balloon = 4096
   cores   = 3
 
   cpu = "x86-64-v2-AES"
