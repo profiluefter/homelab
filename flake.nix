@@ -23,6 +23,9 @@
           talhelper.packages.x86_64-linux.default
 
           terraform
+
+		  # the terraform sops provider seems to not support unlocking the GPG key
+          (writeShellScriptBin "unlock-gpg" "gpg --sign -o /dev/null <(echo 'test')")
         ];
 
         shellHook = ''

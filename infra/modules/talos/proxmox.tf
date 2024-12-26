@@ -1,13 +1,4 @@
-terraform {
-  required_providers {
-    proxmox = {
-      source  = "telmate/proxmox"
-      version = "3.0.1-rc1"
-    }
-  }
-}
-
-# only used for initial installation. version and additional system extensions will be managed using talosctl
+# only used for initial installation. vm will be bootet from this and then initialized using talosctl
 resource "proxmox_storage_iso" "talos-iso" {
   pve_node = "thought"
 
@@ -21,10 +12,8 @@ resource "proxmox_storage_iso" "talos-iso" {
 }
 
 resource "proxmox_vm_qemu" "talos_master" {
-  for_each = {for mac in var.proxmox_master_macs: index(var.proxmox_master_macs, mac) => mac}
+  for_each = {for mac in var.proxmox_master_macs : index(var.proxmox_master_macs, mac) => mac}
 
-  depends_on = [proxmox_storage_iso.talos-iso]
-  iso = "${proxmox_storage_iso.talos-iso.storage}:iso/${proxmox_storage_iso.talos-iso.filename}"
   qemu_os = "l26"
 
   target_node = "thought"
@@ -33,13 +22,13 @@ resource "proxmox_vm_qemu" "talos_master" {
   desc = "Talos Master Node ${each.key + 1}"
   tags = "talos"
 
-  memory = 4096
+  memory  = 4096
   balloon = 2048
-  cores  = 2
+  cores   = 2
 
   cpu = "x86-64-v2-AES"
 
-  boot = "order=scsi0;ide2"
+  boot  = "order=scsi0"
   agent = 1
 
   scsihw = "virtio-scsi-pci"
@@ -55,17 +44,15 @@ resource "proxmox_vm_qemu" "talos_master" {
   }
 
   network {
-    model  = "virtio"
-    bridge = "vmbr0"
+    model   = "virtio"
+    bridge  = "vmbr0"
     macaddr = each.value
   }
 }
 
 resource "proxmox_vm_qemu" "talos_worker" {
-  for_each = {for mac in var.proxmox_worker_macs: index(var.proxmox_worker_macs, mac) => mac}
+  for_each = {for mac in var.proxmox_worker_macs : index(var.proxmox_worker_macs, mac) => mac}
 
-  depends_on = [proxmox_storage_iso.talos-iso]
-  iso = "${proxmox_storage_iso.talos-iso.storage}:iso/${proxmox_storage_iso.talos-iso.filename}"
   qemu_os = "l26"
 
   target_node = "thought"
@@ -74,13 +61,13 @@ resource "proxmox_vm_qemu" "talos_worker" {
   desc = "Talos Worker Node ${each.key + 1}"
   tags = "talos"
 
-  memory = 4096
+  memory  = 4096
   balloon = 2048
-  cores  = 3
+  cores   = 3
 
   cpu = "x86-64-v2-AES"
 
-  boot = "order=scsi0;ide2"
+  boot  = "order=scsi0"
   agent = 1
 
   scsihw = "virtio-scsi-pci"
@@ -96,8 +83,8 @@ resource "proxmox_vm_qemu" "talos_worker" {
   }
 
   network {
-    model  = "virtio"
-    bridge = "vmbr0"
+    model   = "virtio"
+    bridge  = "vmbr0"
     macaddr = each.value
   }
 }

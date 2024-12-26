@@ -2,7 +2,7 @@ terraform {
   required_providers {
     proxmox = {
       source  = "telmate/proxmox"
-      version = "3.0.1-rc1"
+      version = "3.0.1-rc3"
     }
     sops = {
       source  = "carlpett/sops"
@@ -53,4 +53,6 @@ module "talos" {
     "C2:71:14:A0:FF:00",
     "C2:71:14:A0:FF:01"
   ]
+
+  oci_compartment_id = module.oracle_base.compartment_ocid
 }
