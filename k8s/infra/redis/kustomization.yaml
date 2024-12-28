@@ -1,12 +1,38 @@
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-namespace: redis-operator
-resources: []
-
-# FIXME: manager image not available - not deployable currently
-#  - https://raw.githubusercontent.com/OT-CONTAINER-KIT/redis-operator/v0.18.0/config/crd/bases/redis.redis.opstreelabs.in_redis.yaml
-#  - https://raw.githubusercontent.com/OT-CONTAINER-KIT/redis-operator/v0.18.0/config/crd/bases/redis.redis.opstreelabs.in_redisclusters.yaml
-#  - https://raw.githubusercontent.com/OT-CONTAINER-KIT/redis-operator/v0.18.0/config/rbac/role.yaml
-#  - https://raw.githubusercontent.com/OT-CONTAINER-KIT/redis-operator/v0.18.0/config/rbac/serviceaccount.yaml
-#  - https://raw.githubusercontent.com/OT-CONTAINER-KIT/redis-operator/v0.18.0/config/rbac/role_binding.yaml
-#  - https://raw.githubusercontent.com/OT-CONTAINER-KIT/redis-operator/v0.18.0/config/manager/manager.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: redis-operator
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: ot-container-kit-repo
+  namespace: flux-system
+spec:
+  interval: 4h
+  url: https://ot-container-kit.github.io/helm-charts/
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: redis-operator
+  namespace: flux-system
+spec:
+  interval: 4h
+  chart:
+    spec:
+      chart: redis-operator
+      version: 0.18.1
+      sourceRef:
+        kind: HelmRepository
+        name: ot-container-kit-repo
+        namespace: flux-system
+  targetNamespace: redis-operator
+  values:
+    certmanager:
+      enabled: false # we already have certmanager
+    redisOperator:
+      # we apparently need a certificate for this feature (which itself is pretty undocumented)
+      # the examples try to get a letsencrypt certificate for the cluster internal URL which can not work
+      # maybe I can try a self-signed certificate in the future but for now I don't think I'll need this feature
+      webhook: false
