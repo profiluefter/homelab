@@ -10,9 +10,12 @@
     * for custom built container images (e.g. fss-to-rss)
     * Harbor?
       * they have [an operator](https://github.com/goharbor/harbor-operator) but it's currently not maintained
-* [ ] Fix Redis Operator
+* [x] Fix Redis Operator
 * [ ] Deploy Overleaf with Authentik Auth
   * Overleaf is open-source
   * OAuth2 authentication can be done using [this project](https://github.com/smhaller/ldap-overleaf-sl)
 * [ ] Make authentik configuration declarative
   * they have [plans](https://github.com/goauthentik/authentik/issues/5675) to create a kubernetes operator in the future
+* [ ] Internal Certificate Authority using certmanager for things like DB connections and internal k8s webhooks
+  * maybe activate the webhook feature of the redis operator when this exists
+  * use for all postgres and redis instances

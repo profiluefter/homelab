@@ -94,3 +94,12 @@ spec:
           instances: 1
           storage:
             size: 5Gi
+      - apiVersion: redis.redis.opstreelabs.in/v1beta2
+        kind: Redis
+        metadata:
+          name: authentik-redis
+          namespace: authentik
+        spec:
+          kubernetesConfig:
+            image: quay.io/opstree/redis:v7.2.6
+          # persistence is not required here
