@@ -40,10 +40,7 @@ spec:
       enabled: false
 
     redis:
-      enabled: true
-      master:
-        persistence:
-          size: 1Gi
+      enabled: false
 
     global:
       env:
@@ -83,6 +80,13 @@ spec:
             secretKeyRef:
               name: authentik-postgres-app
               key: password
+
+        - name: AUTHENTIK_REDIS__HOST
+          value: "authentik-redis.authentik.svc.cluster.local"
+        - name: AUTHENTIK_REDIS__PORT
+          value: "6379"
+        - name: AUTHENTIK_REDIS__DB
+          value: "0"
 
     additionalObjects:
       - apiVersion: postgresql.cnpg.io/v1
