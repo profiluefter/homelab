@@ -4,7 +4,7 @@ metadata:
   name: cert-manager
   namespace: flux-system
 spec:
-  interval: 10m
+  interval: 4h
   url: https://charts.jetstack.io
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
@@ -13,7 +13,7 @@ metadata:
   name: cert-manager
   namespace: flux-system
 spec:
-  interval: 10m
+  interval: 4h
   chart:
     spec:
       chart: cert-manager
@@ -22,7 +22,6 @@ spec:
         kind: HelmRepository
         name: cert-manager
         namespace: flux-system
-      interval: 10m
   targetNamespace: cert-manager
   install:
     createNamespace: true

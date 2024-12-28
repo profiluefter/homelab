@@ -9,7 +9,7 @@ metadata:
   name: podinfo
   namespace: podinfo
 spec:
-  interval: 30m0s
+  interval: 4h
   path: ./kustomize
   prune: true
   retryInterval: 2m0s
