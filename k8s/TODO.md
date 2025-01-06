@@ -14,6 +14,9 @@
 * [ ] Deploy Overleaf with Authentik Auth
   * Overleaf is open-source
   * OAuth2 authentication can be done using [this project](https://github.com/smhaller/ldap-overleaf-sl)
+* [ ] MongoDB Operator
+  * Required for overleaf
+  * [This community operator](https://github.com/mongodb/mongodb-kubernetes-operator) looks promising
 * [ ] Make authentik configuration declarative
   * they have [plans](https://github.com/goauthentik/authentik/issues/5675) to create a kubernetes operator in the future
 * [ ] Internal Certificate Authority using certmanager for things like DB connections and internal k8s webhooks
