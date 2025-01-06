@@ -1,6 +1,6 @@
 clusterName: krz-k8s
 
-talosVersion: v1.7.6
+talosVersion: v1.9.1
 kubernetesVersion: v1.29.0
 
 allowSchedulingOnControlPlanes: false

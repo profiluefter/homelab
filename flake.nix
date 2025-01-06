@@ -34,6 +34,7 @@
             exit 1
           fi
           export KUBECONFIG=$(pwd)/kubeconfig
+          export TALOSCONFIG=$(pwd)/talos/clusterconfig/talosconfig
         '';
       };
 
