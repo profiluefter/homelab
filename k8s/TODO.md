@@ -14,7 +14,7 @@
 * [ ] Deploy Overleaf with Authentik Auth
   * Overleaf is open-source
   * OAuth2 authentication can be done using [this project](https://github.com/smhaller/ldap-overleaf-sl)
-* [ ] MongoDB Operator
+* [x] ~~MongoDB Operator~~ skipped and just deployed per-instance
   * Required for overleaf
   * [This community operator](https://github.com/mongodb/mongodb-kubernetes-operator) looks promising
 * [ ] Make authentik configuration declarative
