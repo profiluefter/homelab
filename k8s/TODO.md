@@ -22,3 +22,5 @@
 * [ ] Internal Certificate Authority using certmanager for things like DB connections and internal k8s webhooks
   * maybe activate the webhook feature of the redis operator when this exists
   * use for all postgres and redis instances
+* [ ] Move FreshRSS database to the dedicated postgres cluster
+  * currently it apparently uses a SQLite database
