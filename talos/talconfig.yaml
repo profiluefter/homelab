@@ -41,20 +41,20 @@ nodes:
     ipAddress: 10.0.0.150
     controlPlane: true
     installDiskSelector:
-      size: 20Gi
+      model: "QEMU HARDDISK"
     nodeLabels:
       network-location: krz
 
   - hostname: talos-worker-1.lan
     ipAddress: 10.0.0.151
     installDiskSelector:
-      size: 23Gi
+      model: "QEMU HARDDISK"
     nodeLabels:
       network-location: krz
 
   - hostname: talos-worker-2.lan
     ipAddress: 10.0.0.152
     installDiskSelector:
-      size: 23Gi
+      model: "QEMU HARDDISK"
     nodeLabels:
       network-location: krz
