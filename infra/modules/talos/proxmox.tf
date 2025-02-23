@@ -78,7 +78,7 @@ resource "proxmox_vm_qemu" "talos_worker" {
       scsi0 {
         disk {
           storage = "local-lvm"
-          size    = 23
+          size    = 25
         }
       }
     }
