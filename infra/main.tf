@@ -55,4 +55,5 @@ module "talos" {
   ]
 
   oci_compartment_id = module.oracle_base.compartment_ocid
+  oci_vcn_id = module.oracle_base.vcn_ocid
 }

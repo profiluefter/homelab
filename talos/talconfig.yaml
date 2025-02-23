@@ -58,3 +58,25 @@ nodes:
       model: "QEMU HARDDISK"
     nodeLabels:
       network-location: krz
+
+  - hostname: talos-worker-01.talos.homelab.oraclevcn.com
+    ipAddress: 10.72.10.101
+    installDiskSelector:
+      size: ">10G"
+    nodeLabels:
+      network-location: oracle
+    machineSpec:
+      arch: arm64
+      bootMethod: disk-image
+      imageSuffix: qcow2
+      mode: oracle
+    imageSchematic:
+      customization:
+        systemExtensions:
+          officialExtensions: [] # TODO: add oracle specific extensions
+    patches:
+      - |-
+        machine:
+          time:
+            servers:
+              - 169.254.169.254
