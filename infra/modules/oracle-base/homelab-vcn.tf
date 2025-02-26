@@ -1,10 +1,12 @@
-module "vcn" {
-  source  = "oracle-terraform-modules/vcn/oci"
-  version = "3.6.0"
-
+resource "oci_core_vcn" "homelab-vcn" {
   compartment_id = oci_identity_compartment.homelab_compartment.id
 
-  vcn_name = "homelab-vcn"
-  vcn_cidrs = [ "10.72.0.0/16" ]
-  vcn_dns_label = "homelab"
+  display_name = "homelab-vcn"
+  cidr_block   = "10.72.0.0/16"
+  dns_label    = "homelab"
+}
+
+moved {
+  from = module.vcn.oci_core_vcn.vcn
+  to   = oci_core_vcn.homelab-vcn
 }

@@ -9,6 +9,8 @@ resource "oci_core_subnet" "talos_subnet" {
 }
 
 resource "oci_core_instance" "talos_worker" {
+  count = 0 # FIXME: currently unavailable
+
   compartment_id = var.oci_compartment_id
   availability_domain = var.oci_instance_availability_domain
 

@@ -21,5 +21,5 @@ variable "oci_vcn_id" {
 variable "oci_instance_availability_domain" {
   description = "Availability domain to use for the Talos worker nodes"
   type        = string
-  default     = "AD-3"
+  default     = "tLde:EU-FRANKFURT-1-AD-3"
 }
