@@ -1,3 +1,6 @@
+# noinspection YAMLSchemaValidation
+#$schema: https://raw.githubusercontent.com/budimanjojo/talhelper/refs/heads/master/pkg/config/schemas/talconfig.json
+
 clusterName: krz-k8s
 
 talosVersion: v1.9.1
@@ -13,6 +16,12 @@ controlPlane:
       systemExtensions:
         officialExtensions:
           - siderolabs/qemu-guest-agent
+  patches:
+    - |-
+      machine:
+        network:
+          kubespan:
+            enabled: true
 
 worker:
   schematic:
@@ -24,6 +33,11 @@ worker:
           - siderolabs/util-linux-tools
           - siderolabs/qemu-guest-agent
   patches:
+    - |-
+      machine:
+        network:
+          kubespan:
+            enabled: true
     - |-
       machine:
         kubelet:
