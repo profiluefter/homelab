@@ -9,6 +9,7 @@ resources:
   - grafana.yaml
   - longhorn.yaml
   - metallb.yaml
+  - netbox.yaml
   - overleaf.yaml
   - podinfo.yaml
   - postgres.yaml

@@ -1,0 +1,9 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: netbox-postgres
+  namespace: netbox
+spec:
+  instances: 1
+  storage:
+    size: 3Gi

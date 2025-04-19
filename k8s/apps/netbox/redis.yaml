@@ -1,0 +1,9 @@
+apiVersion: redis.redis.opstreelabs.in/v1beta2
+kind: Redis
+metadata:
+  name: netbox-redis
+  namespace: netbox
+spec:
+  kubernetesConfig:
+    image: quay.io/opstree/redis:v7.2.6
+  # persistence is not required here

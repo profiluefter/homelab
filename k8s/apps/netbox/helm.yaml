@@ -1,0 +1,83 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: netbox
+  namespace: flux-system
+spec:
+  interval: 4h
+  chart:
+    spec:
+      chart: netbox
+      version: 5.0.x
+      sourceRef:
+        kind: HelmRepository
+        name: netbox-repo
+        namespace: flux-system
+  targetNamespace: netbox
+  values:
+    replicaCount: 1
+    # TODO: superuser
+    allowedHosts:
+      - netbox.s.h-a.cc
+    # TODO: email
+
+    loginRequired: true
+    remoteAuth:
+      enabled: true
+      backends:
+        - social_core.backends.open_id_connect.OpenIdConnectAuth
+    logoutRedirectUrl: "https://auth.s.h-a.cc/application/o/netbox/end-session/"
+
+    extraConfig:
+      - values:
+          SOCIAL_AUTH_OIDC_ENDPOINT: "https://auth.s.h-a.cc/application/o/netbox/"
+          SOCIAL_AUTH_OIDC_SCOPE: "openid profile email roles"
+          # TODO: group auth: https://docs.goauthentik.io/integrations/services/netbox/#groups
+          # https://github.com/netbox-community/netbox-chart/blob/main/docs/auth.md#configuring-sso
+      - secret:
+          secretName: netbox-sso
+
+    releaseCheck:
+      url: "https://api.github.com/repos/netbox-community/netbox/releases"
+    # TODO: monitoring / metrics
+    # secret key is randomly generated
+
+    postgresql:
+      enabled: false
+    externalDatabase:
+      host: netbox-postgres-rw.netbox
+      port: 5432
+      database: app
+      username: app
+      existingSecretName: netbox-postgres-app
+      existingSecretKey: password
+
+    redis:
+      enabled: false
+    tasksRedis: &redis
+      host: netbox-redis.netbox
+    cachingRedis: *redis
+
+    persistence:
+      enabled: true
+      size: 1Gi
+    # enabled when required
+#    reportsPersistence:
+#      enabled: true
+#      size: 1Gi
+#    scriptsPersistence:
+#      enabled: true
+#      size: 1Gi
+
+    ingress:
+      enabled: true
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      hosts:
+        - host: netbox.s.h-a.cc
+          paths: ["/"]
+      tls:
+        - secretName: netbox-tls
+          hosts:
+            - netbox.s.h-a.cc
+
