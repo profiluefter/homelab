@@ -1,48 +1,60 @@
 apiVersion: v1
-kind: Secret
+kind: ConfigMap
 metadata:
-    name: netbox-sso
-    namespace: netbox
-stringData:
-    SOCIAL_AUTH_OIDC_KEY: ENC[AES256_GCM,data:FGwbl/Od1fj1HrC3LbBjRQa3WbFex8RxFPcpDnkW9i+8pek5+bSI/g==,iv:2sltpO81ridr2y/Oi5XJ+nAGDeG49IIaOO0etsULpuY=,tag:ahVK1YKSDqSQLH5+HNvSjQ==,type:str]
-    SOCIAL_AUTH_OIDC_SECRET: ENC[AES256_GCM,data:HQvC/HYp4wq20FbebSE9wCcdLosRgk3fzzge1200lmjdeDZ+uadz9NmjMpaNpbKCb5CmDMMgqOQHrs+UiWsu3F37uYSeKIOQhdddEf4keKK3cmoRDt3pnxcVOgsi4GJLYU474n/YldgFKQgan8inRR6JIc+1q2rUPIDm81NlAWo=,iv:AiikIc2rlUITT+DyMALaSMyohFOQljaZ5mm5594EKT4=,tag:NKb6rmuqBx9yGUo6jozlbA==,type:str]
-sops:
-    kms: []
-    gcp_kms: []
-    azure_kv: []
-    hc_vault: []
-    age:
-        - recipient: age1kvurr9559cqq6q05gdv0g7798darr2y0n857zjz7z6w34cvx2f0s4auuwr
-          enc: |
-            -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBYbjY4c1JzRjR0ZVkzYWVz
-            NmNCTCtGZmNKZlRlajN3NXJ4UFRSVGN5b1gwCkJDdm1FTjhPUmxFbkxqcnd2aWR1
-            L29JWjBseXpQQ0VQbHJXYzI1ZHVFaEUKLS0tIDFmN2ZJRXBVdHF5UjhSUFNYWENj
-            S3ZxemJqbmFZaWM3Q3lNOFQ1Yll1emMK9batKalyDr/VB5UG0uFgfTZdUkE3sG4C
-            8Q6pFQbqR9Hh+obsGdwFMJt6cQs86t/7ULsR+18EBejxERhVOeRc1w==
-            -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-04-19T23:13:57Z"
-    mac: ENC[AES256_GCM,data:eKoDgbs3QzKVzeHRCJtwNXi5dEUIjP26jXqAUeILTRfeUcfuyMO1bxkcEoqsmt02uD36fAmP9/U4rCV4OMrTxA69saDWzYXYjPJIxjaQ9Jd/ZszAo7FfoNoTVwIf0woSWc+QIALskE0hAebwl+pKNGX8d8q2Mhepr7nJNzNi9kk=,iv:Etv+OUm2Vcd9TOo4OLIzngB6vCAZpE2SSc0XxOi9Yv0=,tag:QkSglvhi9Im9SUxOiBgj3g==,type:str]
-    pgp:
-        - created_at: "2025-04-19T23:13:57Z"
-          enc: |-
-            -----BEGIN PGP MESSAGE-----
-
-            hQIMA4DsoDiMz+AoAQ/+MUDoVpryCAAus32twTTXJqD24vaz13WJDTLaFEdqwCEF
-            mGwsOt+4hayLXk+XYVAUBmi9jMpcMlE0j2+IkOk/1nfnBHCmr5InKkc6L4B8Cg1y
-            mG0Rud5MAdhR0pLbc0ge26pn4cL9rq4w7gsZAR/gIJG8Cu5rPOScc7oFz/GHkvqn
-            j8rOi3oecXzCGoZqZ0dYYPe/t66uH6xoDYuu4cJElyROJWexqu2AX10AB4Zq++to
-            ihBe6hmFKTVzqSA2/xUd/OoLU01/PcUWUytIO+fWkJGZk6pWQDRtQL7XPGnDICgd
-            2tXWl17YAbaN7tSts8wxND+eISwCmHwvZVNAG1LOJvqL5zMFqCHSTwVBuSvQbSR8
-            XqWDhXln6Cy+uCJYQj0q8myraddWuXIFbkNqIYywdFE8mTajruVBeGeD4rF3Kcig
-            73BpfECkCF705b93ROWGf8w2wrCM6TFYmV38Rg5kjerOKfK0AL2bbrSDs0fqgdiZ
-            h8Pvg7DfmVpQJLq8IMYlU9ydjn0okdzU4MxZVpEvNFS+AtN/Et2Mkxh21V/ok9tn
-            t/paPhEuWL0cFZPiYHceKzsTa5H01SQCvPtQjIvrRCVDLn0bUrmNbbIugdDQHaQd
-            RqNNegHaLvB1kLTsa/fbrVGUNOjWzFqa70yev0UxkfkVHu0paUQQRlqwTh+SF3bS
-            XgEyVTTvG5WCjl4AcKGWs0uuZXElG6dqUsRK7cXpHeGcpTp1yPyvL0swXo6Ch01y
-            Rlj7gkTOVxIGZKIa0evsAbKj7T/8b6GC3rYpQ0TkyAmdWl2q0NLxAW4JZaieYH8=
-            =n6D7
-            -----END PGP MESSAGE-----
-          fp: 9264180E8BA8C283F19DB9F8B18AC2562696539F
-    encrypted_regex: ^(data|stringData)$
-    version: 3.9.4
+  name: netbox-sso-config
+  namespace: netbox
+data:
+  "custom_pipeline.py": |
+    # from https://docs.goauthentik.io/integrations/services/netbox/#groups
+    from netbox.authentication import Group
+    
+    class AuthFailed(Exception):
+        pass
+    
+    def add_groups(response, user, backend, *args, **kwargs):
+        try:
+            groups = response['groups']
+        except KeyError:
+            pass
+    
+        # Add all groups from oAuth token
+        for group in groups:
+            group, created = Group.objects.get_or_create(name=group)
+            user.groups.add(group)
+    
+    def remove_groups(response, user, backend, *args, **kwargs):
+        try:
+            groups = response['groups']
+        except KeyError:
+            # Remove all groups if no groups in oAuth token
+            user.groups.clear()
+            pass
+    
+        # Get all groups of user
+        user_groups = [item.name for item in user.groups.all()]
+        # Get groups of user which are not part of oAuth token
+        delete_groups = list(set(user_groups) - set(groups))
+    
+        # Delete non oAuth token groups
+        for delete_group in delete_groups:
+            group = Group.objects.get(name=delete_group)
+            # group.user_set.remove(user) # For Netbox < 4.0.0
+            user.groups.remove(group) # For Netbox >= 4.0.0
+    
+    
+    def set_roles(response, user, backend, *args, **kwargs):
+        # Remove Roles temporary
+        user.is_superuser = False
+        user.is_staff = False
+        try:
+            groups = response['groups']
+        except KeyError:
+            # When no groups are set
+            # save the user without Roles
+            user.save()
+            pass
+    
+        # Set roles is role (superuser or staff) is in groups
+        user.is_superuser = True if 'superusers' in groups else False
+        user.is_staff = True if 'staff' in groups else False
+        user.save()
