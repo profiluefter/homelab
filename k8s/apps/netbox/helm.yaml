@@ -28,8 +28,6 @@ spec:
         - social_core.backends.open_id_connect.OpenIdConnectAuth
     logoutRedirectUrl: "https://auth.s.h-a.cc/application/o/netbox/end-session/"
 
-    debug: true
-
     extraConfig:
       - values:
           SOCIAL_AUTH_OIDC_ENDPOINT: "https://auth.s.h-a.cc/application/o/netbox/"
