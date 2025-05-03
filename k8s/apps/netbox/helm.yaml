@@ -16,6 +16,9 @@ spec:
   targetNamespace: netbox
   values:
     replicaCount: 1
+    updateStrategy:
+      type: Recreate # volume can't be mounted in multiple pods at the same time -> would lead to failing updates
+
     # TODO: superuser
     allowedHosts:
       - netbox.s.h-a.cc
