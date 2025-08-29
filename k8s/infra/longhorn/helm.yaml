@@ -29,7 +29,7 @@ spec:
   chart:
     spec:
       chart: longhorn
-      version: 1.6.x
+      version: 1.7.x
       sourceRef:
         kind: HelmRepository
         name: longhorn-repo
@@ -49,3 +49,4 @@ spec:
       defaultDataLocality: best-effort
     defaultSettings:
       backupTarget: nfs://10.0.0.22:/Kubernetes
+      concurrentAutomaticEngineUpgradePerNodeLimit: 1
