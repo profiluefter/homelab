@@ -32,7 +32,7 @@ spec:
             - name: ATUIN_PORT
               value: "8080"
             - name: ATUIN_OPEN_REGISTRATION
-              value: "true" # TODO: change after initial setup
+              value: "false"
           ports:
             - name: http
               containerPort: 8080
