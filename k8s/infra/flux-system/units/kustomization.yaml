@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: flux-system
 
 resources:
+  - atuin.yaml
   - authentik.yaml
   - cert-manager.yaml
   - freshrss.yaml
