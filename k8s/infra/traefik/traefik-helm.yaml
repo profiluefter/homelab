@@ -27,6 +27,9 @@ spec:
     providers:
       kubernetesCRD:
         allowCrossNamespace: true
+        allowEmptyServices: true
+      kubernetesIngress:
+        allowEmptyServices: true
     ingressRoute:
       dashboard:
         enabled: true
