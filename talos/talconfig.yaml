@@ -3,7 +3,7 @@
 
 clusterName: krz-k8s
 
-talosVersion: v1.9.1
+talosVersion: v1.10.6
 kubernetesVersion: v1.29.0
 
 allowSchedulingOnControlPlanes: false
@@ -22,6 +22,7 @@ controlPlane:
         network:
           kubespan:
             enabled: true
+            allowDownPeerBypass: true
 
 worker:
   schematic:
@@ -38,6 +39,7 @@ worker:
         network:
           kubespan:
             enabled: true
+            allowDownPeerBypass: true
     - |-
       machine:
         kubelet:
