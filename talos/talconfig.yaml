@@ -4,7 +4,7 @@
 clusterName: krz-k8s
 
 talosVersion: v1.11.3
-kubernetesVersion: v1.33.5
+kubernetesVersion: v1.34.1
 
 allowSchedulingOnControlPlanes: false
 
@@ -29,7 +29,7 @@ worker:
     customization:
       systemExtensions:
         officialExtensions:
-          # longhorn required iscsi-tools and util-linux-tools
+          # longhorn requires iscsi-tools and util-linux-tools
           - siderolabs/iscsi-tools
           - siderolabs/util-linux-tools
           - siderolabs/qemu-guest-agent
