@@ -17,7 +17,7 @@ spec:
   chart:
     spec:
       chart: authentik
-      version: 2025.8.x
+      version: 2025.10.x
       sourceRef:
         kind: HelmRepository
         name: authentik-repo
