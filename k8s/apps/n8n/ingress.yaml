@@ -7,7 +7,6 @@ metadata:
     cert-manager.io/cluster-issuer: letsencrypt-prod
     traefik.ingress.kubernetes.io/router.middlewares: authentik-ak-outpost-authentik-embedded-outpost@kubernetescrd
 spec:
-  ingressClassName: traefik
   tls:
     - hosts:
         - n8n.s.h-a.cc
