@@ -7,3 +7,6 @@ resources:
   - statefulset.yaml
   - service.yaml
   - ingress.yaml
+  - browserless-secret.yaml
+  - browserless-deployment.yaml
+  - browserless-service.yaml

@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: browserless
+  namespace: n8n
+  labels:
+    app: browserless
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: browserless
+  template:
+    metadata:
+      labels:
+        app: browserless
+    spec:
+      containers:
+        - name: browserless
+          image: ghcr.io/browserless/chromium:v2.38.2
+          ports:
+            - containerPort: 3000
+              name: http
+          env:
+            - name: TOKEN
+              valueFrom:
+                secretKeyRef:
+                  key: token
+                  name: browserless-token
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              memory: "1536Mi"
