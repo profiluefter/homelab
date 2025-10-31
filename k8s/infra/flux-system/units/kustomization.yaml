@@ -10,6 +10,7 @@ resources:
   - grafana.yaml
   - longhorn.yaml
   - metallb.yaml
+  - n8n.yaml
   - netbox.yaml
   - overleaf.yaml
   - podinfo.yaml
