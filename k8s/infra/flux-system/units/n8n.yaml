@@ -1,0 +1,6 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: n8n
+spec:
+  path: ./k8s/apps/n8n
