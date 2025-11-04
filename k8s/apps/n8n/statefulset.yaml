@@ -83,14 +83,16 @@ spec:
             httpGet:
               path: /healthz
               port: 5678
-            initialDelaySeconds: 30
+            initialDelaySeconds: 120
             periodSeconds: 10
+            failureThreshold: 5
           readinessProbe:
             httpGet:
               path: /healthz
               port: 5678
             initialDelaySeconds: 10
             periodSeconds: 10
+            failureThreshold: 5
   volumeClaimTemplates:
     - metadata:
         name: data
