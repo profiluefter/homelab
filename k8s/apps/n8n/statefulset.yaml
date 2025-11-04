@@ -63,7 +63,7 @@ spec:
                   name: n8n-postgres-app
                   key: port
             - name: N8N_PORT
-              value: "5678"
+              value: "443"
             - name: N8N_PROTOCOL
               value: "https"
             - name: N8N_HOST
