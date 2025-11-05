@@ -26,7 +26,7 @@ spec:
           image: n8nio/n8n:1.117.3
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 5678
+            - containerPort: 443 # yes this is still plain http
               name: http
           resources:
             requests:
@@ -82,14 +82,14 @@ spec:
           livenessProbe:
             httpGet:
               path: /healthz
-              port: 5678
+              port: 443
             initialDelaySeconds: 120
             periodSeconds: 10
             failureThreshold: 5
           readinessProbe:
             httpGet:
               path: /healthz
-              port: 5678
+              port: 443
             initialDelaySeconds: 10
             periodSeconds: 10
             failureThreshold: 5

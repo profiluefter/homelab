@@ -10,4 +10,4 @@ spec:
   ports:
     - name: http
       port: 5678
-      targetPort: 5678
+      targetPort: 443
