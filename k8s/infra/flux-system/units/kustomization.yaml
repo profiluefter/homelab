@@ -6,6 +6,7 @@ resources:
   - atuin.yaml
   - authentik.yaml
   - cert-manager.yaml
+  - featureschleuder.yaml
   - freshrss.yaml
   - grafana.yaml
   - longhorn.yaml

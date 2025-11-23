@@ -1,0 +1,92 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: discord-bot
+  namespace: featureschleuder
+  labels:
+    app: discord-bot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: discord-bot
+  template:
+    metadata:
+      labels:
+        app: discord-bot
+    spec:
+      containers:
+      - name: discord-bot
+        image: ghcr.io/vibecoding-inc/discord-featureschleuder:latest
+        env:
+        # Discord credentials from secret
+        - name: DISCORD_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: discord-bot-secret
+              key: DISCORD_TOKEN
+        - name: CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: discord-bot-secret
+              key: CLIENT_ID
+        # Channel ID from configmap (required)
+        - name: CHANNEL_ID
+          valueFrom:
+            configMapKeyRef:
+              name: discord-bot-config
+              key: CHANNEL_ID
+        # Optional guild ID from configmap
+        - name: GUILD_ID
+          valueFrom:
+            configMapKeyRef:
+              name: discord-bot-config
+              key: GUILD_ID
+              optional: true
+        # Log level from configmap
+        - name: LOG_LEVEL
+          valueFrom:
+            configMapKeyRef:
+              name: discord-bot-config
+              key: LOG_LEVEL
+              optional: true
+        # Service enablement from configmap
+        - name: ENABLE_EPIC
+          valueFrom:
+            configMapKeyRef:
+              name: discord-bot-config
+              key: ENABLE_EPIC
+              optional: true
+        - name: ENABLE_STEAM
+          valueFrom:
+            configMapKeyRef:
+              name: discord-bot-config
+              key: ENABLE_STEAM
+              optional: true
+        - name: ENABLE_GOG
+          valueFrom:
+            configMapKeyRef:
+              name: discord-bot-config
+              key: ENABLE_GOG
+              optional: true
+        - name: ENABLE_AMAZON_PRIME
+          valueFrom:
+            configMapKeyRef:
+              name: discord-bot-config
+              key: ENABLE_AMAZON_PRIME
+              optional: true
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        volumeMounts:
+        - name: data
+          mountPath: /app/data
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: discord-bot-state
+      restartPolicy: Always

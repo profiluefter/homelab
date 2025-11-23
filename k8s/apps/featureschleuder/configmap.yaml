@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: discord-bot-config
+  namespace: discord-bot
+data:
+  # Discord Channel ID where free game notifications will be posted
+  # This is required for the bot to function
+  CHANNEL_ID: "1442073931254337646"
+  
+  # Guild ID for development (optional)
+  GUILD_ID: "434760212461912074"
+  
+  # Log level (DEBUG or INFO)
+  LOG_LEVEL: "INFO"
+  
+  # Enable/disable individual game platforms
+  # Set to "true" or "false"
+  ENABLE_EPIC: "true"
+  ENABLE_STEAM: "true"
+  ENABLE_GOG: "true"
+  ENABLE_AMAZON_PRIME: "false"
