@@ -19,4 +19,4 @@ data:
   ENABLE_EPIC: "true"
   ENABLE_STEAM: "true"
   ENABLE_GOG: "true"
-  ENABLE_AMAZON_PRIME: "false"
+  ENABLE_AMAZON_PRIME: "true"
