@@ -105,5 +105,5 @@ spec:
           namespace: authentik
         spec:
           kubernetesConfig:
-            image: quay.io/opstree/redis:v7.2.6
+            image: quay.io/opstree/redis:v7.4.7
           # persistence is not required here
