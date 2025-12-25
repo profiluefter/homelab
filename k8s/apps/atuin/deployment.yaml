@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: atuin-server
-          image: ghcr.io/atuinsh/atuin:18.8.0
+          image: ghcr.io/atuinsh/atuin:v18.10.0
           args:
             - server
             - start
