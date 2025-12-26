@@ -5,5 +5,5 @@ metadata:
   namespace: netbox
 spec:
   kubernetesConfig:
-    image: quay.io/opstree/redis:v7.4.7
+    image: quay.io/opstree/redis:v8.4.0
   # persistence is not required here
