@@ -5,5 +5,8 @@
   ],
   "kubernetes": {
     "managerFilePatterns": ["/k8s/.+\\.yaml$/"]
+  },
+  "flux": {
+    "managerFilePatterns": ["/k8s/.+\\.yaml$/"]
   }
 }
