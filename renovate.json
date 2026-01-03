@@ -16,8 +16,8 @@
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": [
-        "(^|/)talconfig\\.yaml$"
+      "managerFilePatterns": [
+        "/(^|/)talconfig\\.yaml$/"
       ],
       "matchStrings": [
         "talosVersion:\\s+(?<currentValue>v[0-9]+\\.[0-9]+\\.[0-9]+)"
@@ -28,8 +28,8 @@
     },
     {
       "customType": "regex",
-      "fileMatch": [
-        "(^|/)talconfig\\.yaml$"
+      "managerFilePatterns": [
+        "/(^|/)talconfig\\.yaml$/"
       ],
       "matchStrings": [
         "kubernetesVersion:\\s+(?<currentValue>v[0-9]+\\.[0-9]+\\.[0-9]+)"
