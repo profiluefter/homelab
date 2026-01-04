@@ -25,7 +25,7 @@
 
           glab
 
-          terraform
+          opentofu
 
 		  # the terraform sops provider seems to not support unlocking the GPG key
           (writeShellScriptBin "unlock-gpg" "gpg --sign -o /dev/null <(echo 'test')")
