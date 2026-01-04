@@ -7,3 +7,22 @@ spec:
   instances: 1
   storage:
     size: 3Gi
+  backup:
+    volumeSnapshot:
+      className: longhorn-snapshot
+      online: true
+      onlineConfiguration:
+        waitForArchive: true
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: netbox-postgres-backup
+  namespace: netbox
+spec:
+  schedule: "0 2 * * *"
+  backupOwnerReference: self
+  cluster:
+    name: netbox-postgres
+  method: volumeSnapshot
+  immediate: true

@@ -6,3 +6,22 @@ spec:
   instances: 1
   storage:
     size: 2Gi
+  backup:
+    volumeSnapshot:
+      className: longhorn-snapshot
+      online: true
+      onlineConfiguration:
+        waitForArchive: true
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: freshrss-postgres-backup
+  namespace: freshrss
+spec:
+  schedule: "0 2 * * *"
+  backupOwnerReference: self
+  cluster:
+    name: freshrss-postgres
+  method: volumeSnapshot
+  immediate: true

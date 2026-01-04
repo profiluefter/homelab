@@ -98,6 +98,24 @@ spec:
           instances: 1
           storage:
             size: 5Gi
+          backup:
+            volumeSnapshot:
+              className: longhorn-snapshot
+              online: true
+              onlineConfiguration:
+                waitForArchive: true
+      - apiVersion: postgresql.cnpg.io/v1
+        kind: ScheduledBackup
+        metadata:
+          name: authentik-postgres-backup
+          namespace: authentik
+        spec:
+          schedule: "0 2 * * *"
+          backupOwnerReference: self
+          cluster:
+            name: authentik-postgres
+          method: volumeSnapshot
+          immediate: true
       - apiVersion: redis.redis.opstreelabs.in/v1beta2
         kind: Redis
         metadata:
