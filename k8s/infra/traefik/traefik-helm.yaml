@@ -18,16 +18,19 @@ spec:
         kind: HelmRepository
         name: traefik
         namespace: flux-system
-      install:
-        crds: CreateReplace
-      upgrade:
-        crds: CreateReplace
+  install:
+    crds: CreateReplace
+  upgrade:
+    crds: CreateReplace
   targetNamespace: traefik
   values:
     ports:
       web:
-        redirectTo:
-          port: websecure
+        redirections:
+          entryPoint:
+            to: websecure
+            scheme: https
+            permanent: true
     providers:
       kubernetesCRD:
         allowCrossNamespace: true
