@@ -23,8 +23,8 @@ resource "proxmox_vm_qemu" "talos_master" {
   description = "Talos Master Node ${each.key + 1}"
   tags = "talos"
 
-  memory  = 4096
-  balloon = 2048
+  memory  = 6144
+  balloon = 4096
 
   cpu {
     sockets = 1
@@ -67,8 +67,8 @@ resource "proxmox_vm_qemu" "talos_worker" {
   description = "Talos Worker Node ${each.key + 1}"
   tags = "talos"
 
-  memory  = 6144
-  balloon = 4096
+  memory  = 8192
+  balloon = 6144
 
   cpu {
     sockets = 1
@@ -85,7 +85,7 @@ resource "proxmox_vm_qemu" "talos_worker" {
       scsi0 {
         disk {
           storage = "fast"
-          size    = 50
+          size    = 100
         }
       }
     }
