@@ -25,9 +25,12 @@ resource "proxmox_vm_qemu" "talos_master" {
 
   memory  = 4096
   balloon = 2048
-  cores   = 2
 
-  cpu = "x86-64-v2-AES"
+  cpu {
+    sockets = 1
+    cores   = 2
+    type    = "x86-64-v2-AES"
+  }
 
   boot  = "order=scsi0"
   agent = 1
@@ -45,6 +48,7 @@ resource "proxmox_vm_qemu" "talos_master" {
   }
 
   network {
+    id      = 0
     model   = "virtio"
     bridge  = "vmbr0"
     macaddr = each.value
@@ -65,9 +69,12 @@ resource "proxmox_vm_qemu" "talos_worker" {
 
   memory  = 6144
   balloon = 4096
-  cores   = 3
 
-  cpu = "x86-64-v2-AES"
+  cpu {
+    sockets = 1
+    cores   = 3
+    type    = "x86-64-v2-AES"
+  }
 
   boot  = "order=scsi0"
   agent = 1
@@ -85,6 +92,7 @@ resource "proxmox_vm_qemu" "talos_worker" {
   }
 
   network {
+    id      = 0
     model   = "virtio"
     bridge  = "vmbr0"
     macaddr = each.value
