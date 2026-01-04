@@ -23,6 +23,8 @@
           talosctl
           talhelper.packages.x86_64-linux.default
 
+          glab
+
           terraform
 
 		  # the terraform sops provider seems to not support unlocking the GPG key

@@ -8,7 +8,7 @@ variable "proxmox_worker_macs" {
   type = list(string)
 }
 
-variable "oci_compartment_id" {
-  description = "OCID of the compartment for the Talos resources"
-  type = string
-}
+# variable "oci_compartment_id" {
+#   description = "OCID of the compartment for the Talos resources"
+#   type = string
+# }

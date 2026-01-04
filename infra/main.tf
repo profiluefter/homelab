@@ -27,9 +27,9 @@ provider "oci" {
   region       = data.sops_file.oci_credentials.data["region"]
 }
 
-module "oracle_base" {
-  source = "./modules/oracle-base"
-}
+# module "oracle_base" {
+#   source = "./modules/oracle-base"
+# }
 
 data "sops_file" "proxmox_credentials" {
   source_file = "secrets/proxmox.yaml"
@@ -54,5 +54,5 @@ module "talos" {
     "C2:71:14:A0:FF:01"
   ]
 
-  oci_compartment_id = module.oracle_base.compartment_ocid
+  # oci_compartment_id = module.oracle_base.compartment_ocid
 }
