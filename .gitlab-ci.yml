@@ -1,0 +1,4 @@
+include:
+    - project: 'renovate-bot/renovate-runner'
+      file: '/templates/renovate.gitlab-ci.yml'
+      ref: v25.0.0
