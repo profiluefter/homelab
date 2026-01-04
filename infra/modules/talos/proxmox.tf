@@ -17,10 +17,10 @@ resource "proxmox_vm_qemu" "talos_master" {
   qemu_os = "l26"
 
   target_node = "thought"
-  onboot = true
+  start_at_node_boot = true
 
   name = "talos-master-${each.key + 1}"
-  desc = "Talos Master Node ${each.key + 1}"
+  description = "Talos Master Node ${each.key + 1}"
   tags = "talos"
 
   memory  = 4096
@@ -61,10 +61,10 @@ resource "proxmox_vm_qemu" "talos_worker" {
   qemu_os = "l26"
 
   target_node = "thought"
-  onboot = true
+  start_at_node_boot = true
 
   name = "talos-worker-${each.key + 1}"
-  desc = "Talos Worker Node ${each.key + 1}"
+  description = "Talos Worker Node ${each.key + 1}"
   tags = "talos"
 
   memory  = 6144
