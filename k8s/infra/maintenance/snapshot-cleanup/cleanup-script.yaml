@@ -1,0 +1,70 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cleanup-script
+  namespace: maintenance
+data:
+  cleanup.py: |
+    import subprocess
+    import json
+    import re
+    import sys
+
+    RETENTION_COUNT = 5
+
+    def run_cmd(cmd):
+        try:
+            result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+            if result.returncode != 0:
+                print(f"Error running {cmd}: {result.stderr}")
+                return None
+            return result.stdout
+        except Exception as e:
+            print(f"Exception running {cmd}: {e}")
+            return None
+
+    def main():
+        print("Fetching snapshots...")
+        out = run_cmd("kubectl get volumesnapshots -A -o json")
+        if not out:
+            sys.exit(1)
+        
+        try:
+            data = json.loads(out)
+        except json.JSONDecodeError as e:
+            print(f"Failed to parse JSON: {e}")
+            sys.exit(1)
+
+        groups = {}
+        # Regex for CNPG backups: name-backup-YYYYMMDDHHMMSS
+        pattern = re.compile(r"^(.*-backup)-\d{14}$")
+
+        for item in data.get('items', []):
+            ns = item['metadata']['namespace']
+            name = item['metadata']['name']
+            ts = item['metadata']['creationTimestamp']
+            
+            match = pattern.match(name)
+            if match:
+                group_key = f"{ns}/{match.group(1)}"
+                if group_key not in groups:
+                    groups[group_key] = []
+                groups[group_key].append({'name': name, 'ns': ns, 'ts': ts})
+        
+        print(f"Found {len(groups)} backup groups.")
+        
+        for group, items in groups.items():
+            # Sort desc (newest first)
+            items.sort(key=lambda x: x['ts'], reverse=True)
+            
+            to_delete = items[RETENTION_COUNT:]
+            if to_delete:
+                print(f"[{group}] Found {len(items)} snapshots. Keeping {RETENTION_COUNT}. Deleting {len(to_delete)}.")
+                for snap in to_delete:
+                    print(f"  Deleting {snap['ns']}/{snap['name']}...")
+                    run_cmd(f"kubectl delete volumesnapshot -n {snap['ns']} {snap['name']}")
+            else:
+                print(f"[{group}] Found {len(items)} snapshots. All within retention limit.")
+
+    if __name__ == "__main__":
+        main()

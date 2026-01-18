@@ -18,6 +18,7 @@ resources:
   - podinfo.yaml
   - postgres.yaml
   - redis.yaml
+  - snapshot-cleanup.yaml
   - tekton.yaml
   - traefik.yaml
 

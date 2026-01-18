@@ -1,0 +1,40 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: snapshot-cleanup
+  namespace: maintenance
+spec:
+  schedule: "0 23 * * *" # Daily at 23:00
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: snapshot-cleanup
+          containers:
+            - name: cleanup
+              image: python:3.11-alpine
+              command: ["/bin/sh", "-c"]
+              args:
+                - |
+                  apk add --no-cache curl
+                  curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+                  chmod +x kubectl
+                  mv kubectl /usr/local/bin/
+                  python3 /scripts/cleanup.py
+              volumeMounts:
+                - name: script
+                  mountPath: /scripts
+              resources:
+                limits:
+                  cpu: 200m
+                  memory: 256Mi
+                requests:
+                  cpu: 50m
+                  memory: 128Mi
+          volumes:
+            - name: script
+              configMap:
+                name: cleanup-script
+          restartPolicy: OnFailure
