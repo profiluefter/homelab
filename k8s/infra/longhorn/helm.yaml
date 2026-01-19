@@ -35,6 +35,25 @@ spec:
         name: longhorn-repo
         namespace: flux-system
   targetNamespace: longhorn-system
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: Deployment
+              name: longhorn-ui
+            patch: |
+              apiVersion: apps/v1
+              kind: Deployment
+              metadata:
+                name: longhorn-ui
+              spec:
+                template:
+                  spec:
+                    containers:
+                      - name: longhorn-ui
+                        env:
+                          - name: LONGHORN_UI_PORT
+                            value: "8000; large_client_header_buffers 4 32k"
   values:
     ingress:
       enabled: true
