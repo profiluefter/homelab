@@ -85,7 +85,7 @@ resource "proxmox_vm_qemu" "talos_worker" {
       scsi0 {
         disk {
           storage = "fast"
-          size    = 100
+          size    = each.key == "1" ? "150G" : "100G"
         }
       }
     }
