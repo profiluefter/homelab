@@ -19,7 +19,6 @@ spec:
         - name: atuin-server
           image: ghcr.io/atuinsh/atuin:v18.12.0
           args:
-            - server
             - start
           env:
             - name: ATUIN_DB_URI
