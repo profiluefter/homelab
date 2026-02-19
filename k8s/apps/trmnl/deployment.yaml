@@ -36,6 +36,10 @@ spec:
               value: "0"
             - name: DB_DATABASE
               value: "database/storage/database.sqlite"
+            - name: TRUSTED_PROXIES
+              value: "10.244.0.0/16"
+            - name: FORCE_HTTPS
+              value: "1"
           ports:
             - containerPort: 8080
               protocol: TCP
