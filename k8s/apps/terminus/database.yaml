@@ -1,0 +1,26 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: terminus-postgres
+spec:
+  instances: 1
+  storage:
+    size: 3Gi
+  backup:
+    volumeSnapshot:
+      className: longhorn-snapshot
+      online: true
+      onlineConfiguration:
+        waitForArchive: true
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: terminus-postgres-backup
+spec:
+  schedule: "0 2 * * *"
+  backupOwnerReference: self
+  cluster:
+    name: terminus-postgres
+  method: volumeSnapshot
+  immediate: true
