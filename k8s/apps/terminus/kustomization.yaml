@@ -7,3 +7,5 @@ resources:
   - database.yaml
   - pvc.yaml
   - secrets.yaml
+  - deployment.yaml
+  - ingress.yaml

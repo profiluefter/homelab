@@ -1,0 +1,95 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: terminus
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: terminus
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: terminus
+    spec:
+      securityContext:
+        fsGroup: 1000
+      containers:
+        - name: terminus
+          image: ghcr.io/usetrmnl/terminus:0.47.0
+          ports:
+            - containerPort: 2345
+              name: http
+          volumeMounts:
+            - mountPath: /app/public/uploads
+              name: data
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "200m"
+            limits:
+              memory: "1Gi"
+              cpu: "1000m"
+          env:
+            - name: TZ
+              value: "Europe/Vienna"
+            - name: APP_SETUP
+              value: "true"
+            - name: API_URI
+              value: https://terminus.s.h-a.cc
+            - name: HANAMI_PORT
+              value: "2345"
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: terminus-postgres-app
+                  key: uri
+            - name: APP_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: terminus-app-secret
+                  key: APP_SECRET
+            - name: RACK_ATTACK_ALLOWED_SUBNETS
+              value: "10.244.0.0/16"
+            - name: KEYVALUE_URL
+              value: redis://terminus-valkey:6379
+
+        - name: sidekiq
+          image: ghcr.io/usetrmnl/terminus:0.47.0
+          command: ["bundle", "exec", "sidekiq", "-r", "./config/sidekiq.rb"]
+          volumeMounts:
+            - mountPath: /app/public/uploads
+              name: data
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          env:
+            - name: TZ
+              value: "Europe/Vienna"
+            - name: API_URI
+              value: https://terminus.s.h-a.cc
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: terminus-postgres-app
+                  key: uri
+            - name: APP_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: terminus-app-secret
+                  key: APP_SECRET
+            - name: RACK_ATTACK_ALLOWED_SUBNETS
+              value: "10.244.0.0/16"
+            - name: KEYVALUE_URL
+              value: redis://terminus-valkey:6379
+
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: terminus-uploads

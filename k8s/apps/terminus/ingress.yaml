@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: terminus
+spec:
+  ports:
+    - port: 80
+      targetPort: 2345
+      name: http
+  selector:
+    app.kubernetes.io/name: terminus
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: terminus
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  tls:
+    - hosts:
+        - terminus.s.h-a.cc
+      secretName: terminus-tls
+  rules:
+    - host: terminus.s.h-a.cc
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: terminus
+                port:
+                  number: 80
