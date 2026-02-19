@@ -21,6 +21,7 @@ resources:
   - tekton.yaml
 #  - terminus.yaml
   - traefik.yaml
+  - trmnl.yaml
 
 patches:
   - target:

@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trmnl-laravel
+  labels:
+    app: trmnl-laravel
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: trmnl-laravel
+  template:
+    metadata:
+      name: trmnl-laravel
+      labels:
+        app: trmnl-laravel
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: trmnl-laravel
+          image: ghcr.io/usetrmnl/byos_laravel:0.28.1
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: APP_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: trmnl-laravel-app-key
+                  key: APP_KEY
+            - name: PHP_OPCACHE_ENABLE
+              value: "1"
+            - name: REGISTRATION_ENABLED
+              value: "1"
+            - name: DB_DATABASE
+              value: "database/storage/database.sqlite"
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /var/www/html/database/storage
+              name: trmnl-data
+              subPath: database
+            - mountPath: /var/www/html/storage/app/public/images/generated
+              name: trmnl-data
+              subPath: generated_images
+      volumes:
+        - name: trmnl-data
+          persistentVolumeClaim:
+            claimName: trmnl-data-pvc

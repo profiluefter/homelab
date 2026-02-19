@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: trmnl
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+      name: http
+  selector:
+    app.kubernetes.io/name: trmnl
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: trmnl
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  tls:
+    - hosts:
+        - trmnl.s.h-a.cc
+      secretName: trmnl-tls
+  rules:
+    - host: trmnl.s.h-a.cc
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: trmnl
+                port:
+                  number: 80
