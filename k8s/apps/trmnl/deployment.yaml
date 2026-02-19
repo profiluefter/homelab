@@ -18,6 +18,8 @@ spec:
         app: trmnl-laravel
     spec:
       restartPolicy: Always
+      securityContext:
+        fsGroup: 1000
       containers:
         - name: trmnl-laravel
           image: ghcr.io/usetrmnl/byos_laravel:0.28.1
