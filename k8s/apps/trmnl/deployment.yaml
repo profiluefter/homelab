@@ -33,7 +33,7 @@ spec:
             - name: PHP_OPCACHE_ENABLE
               value: "1"
             - name: REGISTRATION_ENABLED
-              value: "1"
+              value: "0"
             - name: DB_DATABASE
               value: "database/storage/database.sqlite"
           ports:
