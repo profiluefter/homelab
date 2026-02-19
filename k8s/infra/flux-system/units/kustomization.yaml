@@ -19,7 +19,7 @@ resources:
   - redis.yaml
   - snapshot-cleanup.yaml
   - tekton.yaml
-  - terminus.yaml
+#  - terminus.yaml
   - traefik.yaml
 
 patches:
