@@ -14,7 +14,6 @@ resources:
   - metallb.yaml
   - n8n.yaml
   - netbox.yaml
-  - overleaf.yaml
   - podinfo.yaml
   - postgres.yaml
   - redis.yaml
