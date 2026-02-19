@@ -28,10 +28,9 @@ metadata:
   name: flux-system-receiver
   namespace: flux-system
 spec:
-  type: github
+  type: gitlab
   events:
-    - "ping"
-    - "push"
+    - "Push Hook"
   secretRef:
     name: webhook-receiver-token
   resources:
