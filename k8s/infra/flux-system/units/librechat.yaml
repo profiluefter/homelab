@@ -1,0 +1,6 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: librechat
+spec:
+  path: ./k8s/apps/librechat

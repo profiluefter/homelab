@@ -10,6 +10,7 @@ resources:
   - featureschleuder.yaml
   - freshrss.yaml
   - grafana.yaml
+  - librechat.yaml
   - longhorn.yaml
   - metallb.yaml
   - n8n.yaml

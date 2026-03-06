@@ -1,0 +1,97 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: librechat
+  namespace: flux-system
+spec:
+  interval: 4h
+  chart:
+    spec:
+      chart: librechat
+      version: "1.9.7"
+      sourceRef:
+        kind: HelmRepository
+        name: librechat-repo
+        namespace: flux-system
+  targetNamespace: librechat
+  values:
+    global:
+      librechat:
+        existingSecretName: librechat-secrets
+
+    librechat:
+      existingSecretName: librechat-secrets
+      configEnv:
+        ALLOW_REGISTRATION: "false"
+        ALLOW_EMAIL_LOGIN: "false"
+        ALLOW_SOCIAL_LOGIN: "true"
+        ALLOW_SOCIAL_REGISTRATION: "true"
+
+        OPENID_ISSUER: "https://auth.s.h-a.cc/application/o/librechat/.well-known/openid-configuration"
+        OPENID_CALLBACK_URL: "/oauth/openid/callback"
+        OPENID_SCOPE: "openid profile email"
+        OPENID_BUTTON_LABEL: "Login with KRZ"
+        OPENID_IMAGE_URL: "https://cdn.jsdelivr.net/gh/selfhst/icons/png/authentik.png"
+        OPENID_GENERATE_NONCE: "true"
+        OPENID_USE_END_SESSION_ENDPOINT: "true"
+      # language=yaml
+      configYamlContent: |
+        endpoints:
+          custom:
+            - name: "OpenRouter"
+              apiKey: "${OPENROUTER_KEY}"
+              baseURL: "https://openrouter.ai/api/v1"
+              models:
+                default: ["moonshotai/kimi-k2.5"]
+                fetch: true
+              titleConvo: true
+              titleModel: "google/gemini-2.5-flash-lite"
+              summarize: false
+              summaryModel: "google/gemini-2.5-flash-lite"
+              dropParams: ["stop"]
+              modelDisplayLabel: "OpenRouter"
+      imageVolume:
+        enabled: true
+        size: 5Gi
+        accessModes: ReadWriteOnce
+
+    # Ingress configuration
+    ingress:
+      enabled: true
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      hosts:
+        - host: librechat.s.h-a.cc
+          paths:
+            - path: /
+              pathType: Prefix
+      tls:
+        - secretName: librechat-tls
+          hosts:
+            - librechat.s.h-a.cc
+
+
+    # Dependencies
+    mongodb:
+      enabled: true
+      persistence:
+        enabled: true
+        size: 8Gi
+        accessMode: ReadWriteOnce
+
+    redis:
+      enabled: true
+      architecture: standalone
+      master:
+        persistence:
+          enabled: true
+          size: 2Gi
+          accessMode: ReadWriteOnce
+
+    meilisearch:
+      enabled: true
+      persistence:
+        enabled: true
+        size: 5Gi
+      auth:
+        existingMasterKeySecret: librechat-secrets
