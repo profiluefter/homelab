@@ -57,6 +57,10 @@ spec:
         size: 5Gi
         accessModes: ReadWriteOnce
 
+    livenessProbe:
+      periodSeconds: 30
+      failureThreshold: 5
+
     # Ingress configuration
     ingress:
       enabled: true
