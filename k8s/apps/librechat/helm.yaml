@@ -65,6 +65,9 @@ spec:
         size: 5Gi
         accessModes: ReadWriteOnce
 
+    updateStrategy:
+      type: Recreate # because of RWO volumes
+
     livenessProbe:
       periodSeconds: 30
       failureThreshold: 5
