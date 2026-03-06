@@ -24,6 +24,9 @@ spec:
     librechat:
       existingSecretName: librechat-secrets
       configEnv:
+        DOMAIN_CLIENT: "https://librechat.s.h-a.cc"
+        DOMAIN_SERVER: "https://librechat.s.h-a.cc"
+
         ALLOW_REGISTRATION: "false"
         ALLOW_EMAIL_LOGIN: "false"
         ALLOW_SOCIAL_LOGIN: "true"
