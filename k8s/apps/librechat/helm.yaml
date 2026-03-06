@@ -38,6 +38,11 @@ spec:
         OPENID_USE_END_SESSION_ENDPOINT: "true"
       # language=yaml
       configYamlContent: |
+        version: 1.3.5
+
+        registration:
+          socialLogins: ["openid"]
+
         endpoints:
           custom:
             - name: "OpenRouter"
