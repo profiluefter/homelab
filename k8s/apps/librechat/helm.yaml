@@ -18,6 +18,8 @@ spec:
     global:
       librechat:
         existingSecretName: librechat-secrets
+      security:
+        allowInsecureImages: true # for custom mongodb image
 
     librechat:
       existingSecretName: librechat-secrets
@@ -78,6 +80,9 @@ spec:
         enabled: true
         size: 8Gi
         accessMode: ReadWriteOnce
+      image:
+        repository: bitnamilegacy/mongodb
+        tag: 8.0.13-debian-12-r0
 
     redis:
       enabled: true
