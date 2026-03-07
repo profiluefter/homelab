@@ -70,12 +70,9 @@ spec:
             type: streamable-http
             url: "https://jb.profiluefter.me/mcp"
             requiresOAuth: false # autodetection thinks it supports OAuth, but that is not implemented for MCP yet
-            headers:
-              Authorization: "Bearer {{YOUTRACK_TOKEN}}"
-            customUserVars:
-              YOUTRACK_TOKEN:
-                title: "Bearer Token"
-                description: "Setup a permanent token in your YouTrack user account with access to the YouTrack service."
+            apiKey:
+              source: user
+              authorization_type: bearer
       imageVolume:
         enabled: true
         size: 5Gi
