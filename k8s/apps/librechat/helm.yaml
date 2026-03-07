@@ -68,14 +68,11 @@ spec:
             serverInstructions: true
 
             type: streamable-http
-            url: "{{YOUTRACK_BASE_URL}}/mcp"
+            url: "https://jb.profiluefter.me/mcp"
             requiresOAuth: false # autodetection thinks it supports OAuth, but that is not implemented for MCP yet
             headers:
               Authorization: "Bearer {{YOUTRACK_TOKEN}}"
             customUserVars:
-              YOUTRACK_BASE_URL:
-                title: "YouTrack Base URL"
-                description: "URL to your YouTrack instance, e.g. https://youtrack.example.org"
               YOUTRACK_TOKEN:
                 title: "Bearer Token"
                 description: "Setup a permanent token in your YouTrack user account with access to the YouTrack service."
