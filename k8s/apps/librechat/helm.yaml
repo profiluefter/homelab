@@ -69,11 +69,8 @@ spec:
 
             type: streamable-http
             url: "https://jb.profiluefter.me/mcp"
-            requiresOAuth: false # autodetection thinks it supports OAuth, but that is not implemented for MCP yet
-            apiKey:
-              source: user
-              authorization_type: bearer
-            startup: false # no api key available on startup
+            headers:
+              Authorization: "Bearer ${YOUTRACK_MCP_KEY}"
       imageVolume:
         enabled: true
         size: 5Gi
