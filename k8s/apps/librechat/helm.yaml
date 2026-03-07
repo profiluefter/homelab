@@ -117,6 +117,8 @@ spec:
       image:
         repository: bitnamilegacy/mongodb
         tag: 8.0.13-debian-12-r0
+      readinessProbe:
+        timeoutSeconds: 20 # somehow extremely slow at the moment
 
     redis:
       enabled: true
