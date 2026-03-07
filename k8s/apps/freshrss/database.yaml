@@ -19,7 +19,7 @@ metadata:
   name: freshrss-postgres-backup
   namespace: freshrss
 spec:
-  schedule: "0 2 * * *"
+  schedule: "0 0 2 * * *"
   backupOwnerReference: self
   cluster:
     name: freshrss-postgres

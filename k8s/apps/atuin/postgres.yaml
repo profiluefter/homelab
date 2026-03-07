@@ -19,7 +19,7 @@ metadata:
   name: atuin-postgres-backup
   namespace: atuin
 spec:
-  schedule: "0 2 * * *"
+  schedule: "0 0 2 * * *"
   backupOwnerReference: self
   cluster:
     name: atuin-postgres

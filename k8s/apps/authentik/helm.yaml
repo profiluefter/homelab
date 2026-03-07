@@ -110,7 +110,7 @@ spec:
           name: authentik-postgres-backup
           namespace: authentik
         spec:
-          schedule: "0 2 * * *"
+          schedule: "0 0 2 * * *"
           backupOwnerReference: self
           cluster:
             name: authentik-postgres
