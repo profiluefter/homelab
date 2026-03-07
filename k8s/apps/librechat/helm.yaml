@@ -60,6 +60,25 @@ spec:
               summaryModel: "google/gemini-2.5-flash-lite"
               dropParams: ["stop"]
               modelDisplayLabel: "OpenRouter"
+              
+        mcpServers:
+          youtrack:
+            title: YouTrack
+            iconPath: "https://upload.wikimedia.org/wikipedia/commons/8/8d/YouTrack_Icon.svg"
+            serverInstructions: true
+
+            type: streamable-http
+            url: "{{YOUTRACK_BASE_URL}}/mcp"
+            requiresOAuth: false # autodetection thinks it supports OAuth, but that is not implemented for MCP yet
+            headers:
+              Authorization: "Bearer {{YOUTRACK_TOKEN}}"
+            customUserVars:
+              YOUTRACK_BASE_URL:
+                title: "YouTrack Base URL"
+                description: "URL to your YouTrack instance, e.g. https://youtrack.example.org"
+              YOUTRACK_TOKEN:
+                title: "Bearer Token"
+                description: "Setup a permanent token in your YouTrack user account with access to the YouTrack service."
       imageVolume:
         enabled: true
         size: 5Gi
