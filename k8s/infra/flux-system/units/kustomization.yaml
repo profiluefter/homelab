@@ -13,6 +13,7 @@ resources:
   - librechat.yaml
   - longhorn.yaml
   - metallb.yaml
+  - metrics-server.yaml
   - n8n.yaml
   - netbox.yaml
   - podinfo.yaml
