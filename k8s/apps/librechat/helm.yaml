@@ -73,6 +73,7 @@ spec:
             apiKey:
               source: user
               authorization_type: bearer
+            startup: false # no api key available on startup
       imageVolume:
         enabled: true
         size: 5Gi
