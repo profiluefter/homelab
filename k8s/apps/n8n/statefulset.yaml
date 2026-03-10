@@ -23,7 +23,7 @@ spec:
               mountPath: /data
       containers:
         - name: n8n
-          image: n8nio/n8n:2.11.2
+          image: n8nio/n8n:2.12.0
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 443 # yes this is still plain http
