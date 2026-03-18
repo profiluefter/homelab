@@ -5,3 +5,8 @@ metadata:
 spec:
   type: ExternalName
   externalName: llm-host.lan
+  ports:
+    - port: 3000
+      targetPort: 3000
+      protocol: TCP
+      name: http
