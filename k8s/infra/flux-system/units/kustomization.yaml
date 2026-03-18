@@ -11,6 +11,7 @@ resources:
   - freshrss.yaml
   - grafana.yaml
   - librechat.yaml
+  - llm-proxy.yaml
   - longhorn.yaml
   - metallb.yaml
   - metrics-server.yaml
