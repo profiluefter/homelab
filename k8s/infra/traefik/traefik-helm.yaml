@@ -38,6 +38,7 @@ spec:
         allowEmptyServices: true
       kubernetesIngress:
         allowEmptyServices: true
+        allowExternalNameServices: true
     ingressRoute:
       dashboard:
         enabled: true
