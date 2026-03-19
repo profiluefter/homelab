@@ -32,6 +32,9 @@ spec:
               to: websecure
               scheme: https
               permanent: true
+    logs:
+      access:
+        enabled: true
     providers:
       kubernetesCRD:
         allowCrossNamespace: true
