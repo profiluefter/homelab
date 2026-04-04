@@ -27,9 +27,9 @@ provider "oci" {
   region       = data.sops_file.oci_credentials.data["region"]
 }
 
-# module "oracle_base" {
-#   source = "./modules/oracle-base"
-# }
+module "oracle_base" {
+  source = "./modules/oracle-base"
+}
 
 data "sops_file" "proxmox_credentials" {
   source_file = "secrets/proxmox.yaml"
