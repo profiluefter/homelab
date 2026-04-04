@@ -42,17 +42,18 @@ provider "proxmox" {
   pm_tls_insecure     = true
 }
 
-module "talos" {
-  source = "./modules/talos"
-
-  proxmox_master_macs = [
-    "C2:71:14:A0:F0:00"
-  ]
-
-  proxmox_worker_macs = [
-    "C2:71:14:A0:FF:00",
-    "C2:71:14:A0:FF:01"
-  ]
-
-  # oci_compartment_id = module.oracle_base.compartment_ocid
-}
+# temporarily out of order
+# module "talos" {
+#   source = "./modules/talos"
+#
+#   proxmox_master_macs = [
+#     "C2:71:14:A0:F0:00"
+#   ]
+#
+#   proxmox_worker_macs = [
+#     "C2:71:14:A0:FF:00",
+#     "C2:71:14:A0:FF:01"
+#   ]
+#
+#   # oci_compartment_id = module.oracle_base.compartment_ocid
+# }
