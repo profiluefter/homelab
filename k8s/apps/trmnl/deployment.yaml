@@ -22,7 +22,7 @@ spec:
         fsGroup: 1000
       containers:
         - name: trmnl-laravel
-          image: ghcr.io/usetrmnl/byos_laravel:0.30.0
+          image: ghcr.io/usetrmnl/byos_laravel:0.32.1
           imagePullPolicy: IfNotPresent
           env:
             - name: APP_KEY
